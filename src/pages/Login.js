@@ -34,6 +34,7 @@ function Login() {
     if (password && (/\S+@\S+\.\S+/.test(user))) {
       checkInfo();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [password]);
 
   return (
