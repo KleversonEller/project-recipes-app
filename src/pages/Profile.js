@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { userLogout } from '../utils';
+import userLogout from '../utils';
 import Header from '../components/Header';
 
 function Profile() {
