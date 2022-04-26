@@ -25,7 +25,6 @@ function App() {
           <Route exact path="/" component={ Login } />
           <Route exact path="/foods" component={ Foods } />
           <Route exact path="/drinks" component={ Drinks } />
-          <Route path="*" component={ NotFound } />
           <Route exact path="/explore" component={ Explore } />
           <Route exact path="/explore/foods" component={ ExploreFoods } />
           <Route exact path="/explore/drinks" component={ ExploreDrinks } />
@@ -47,6 +46,7 @@ function App() {
           <Route exact path="/profile" component={ Profile } />
           <Route exact path="/done-recipes" component={ DoneRecipes } />
           <Route exact path="/favorite-recipes" component={ FavoriteRecipes } />
+          <Route path="*" component={ NotFound } />
         </Switch>
       </BrowserRouter>
     </div>
