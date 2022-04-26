@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { userLogout } from '../utils';
+import Header from '../components/Header';
 
 function Profile() {
   const history = useHistory();
@@ -10,6 +11,7 @@ function Profile() {
   const { email } = JSON.parse(localStorage.getItem('user'));
   return (
     <div>
+      <Header title="Profile" />
       <h3 data-testid="profile-email">{email}</h3>
       <button
         onClick={ () => handleClick('/done-recipes') }
