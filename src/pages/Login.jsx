@@ -1,28 +1,27 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../css/login.css';
+import { useDispatch } from 'react-redux';
+import { saveEmail } from '../actions';
 
-function Login() {
-  const [user, setUser] = useState();
-  const [password, setPassword] = useState();
+const Login = () => {
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
   const [isDisabled, setIsDisabled] = useState(true);
-  const history = useHistory();
-  const handleClick = () => {
-    history.push('/foods');
-  };
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const handleUser = ({ target }) => {
-    setUser(target.value);
-  };
-  const handlePassword = ({ target }) => {
-    setPassword(target.value);
+  const handleClick = () => {
+    navigate('/foods');
   };
 
   const checkInfo = () => {
     const six = 6;
-    if ((password.length > six) && (/\S+@\S+\.\S+/.test(user))) {
+    if ((password.length > six) && (/\S+@\S+\.\S+/.test(email))) {
       setIsDisabled(false);
-      localStorage.setItem('user', JSON.stringify({ email: user }));
+      dispatch(saveEmail(email));
+      localStorage.setItem('user', JSON.stringify({ email }));
       localStorage.setItem('mealsToken', JSON.stringify(1));
       localStorage.setItem('cocktailsToken', JSON.stringify(1));
     } else {
@@ -31,10 +30,9 @@ function Login() {
   };
 
   useEffect(() => {
-    if (password && (/\S+@\S+\.\S+/.test(user))) {
+    if (password && (/\S+@\S+\.\S+/.test(email))) {
       checkInfo();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [password]);
 
   return (
@@ -42,14 +40,14 @@ function Login() {
       <h1>Login</h1>
       <input
         type="email"
-        onChange={ handleUser }
-        placeholder="Digite seu Email"
+        onChange={ ({ target: { value } }) => setEmail(value) }
+        placeholder="Digite seu email"
         name="user"
         data-testid="email-input"
       />
       <input
         type="password"
-        onChange={ handlePassword }
+        onChange={ ({ target: { value } }) => setPassword(value) }
         placeholder="Digite a senha"
         name="password"
         data-testid="password-input"
@@ -64,6 +62,6 @@ function Login() {
       </button>
     </div>
   );
-}
+};
 
 export default Login;

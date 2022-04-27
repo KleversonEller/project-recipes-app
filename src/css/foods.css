@@ -1,0 +1,12 @@
+.foodsContainer {
+  align-items: center;
+
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  height: 576px;
+  justify-content: space-between;
+  margin: auto;
+  padding-top: 20px;
+  width: 100%;
+}

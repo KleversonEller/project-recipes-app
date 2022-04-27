@@ -2,17 +2,18 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import '../css/foods.css';
 
-function Foods() {
-  return (
-    <div className="foodsContainer">
+const Foods = () => (
+  <div className="foodsContainer">
+    <div>
       <Header title="Foods" search="true" />
       <Link to="/">
         <button type="button">Login</button>
       </Link>
-      <Footer />
     </div>
-  );
-}
+    <Footer />
+  </div>
+);
 
 export default Foods;
