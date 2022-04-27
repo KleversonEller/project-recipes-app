@@ -16,21 +16,14 @@ const Login = () => {
     navigate('/foods');
   };
 
-  const handleUser = ({ target }) => {
-    setEmail(target.value);
-  };
-  const handlePassword = ({ target }) => {
-    setPassword(target.value);
-  };
-
   const checkInfo = () => {
     const six = 6;
     if ((password.length > six) && (/\S+@\S+\.\S+/.test(email))) {
+      setIsDisabled(false);
       dispatch(saveEmail(email));
       localStorage.setItem('user', JSON.stringify({ email }));
       localStorage.setItem('mealsToken', JSON.stringify(1));
       localStorage.setItem('cocktailsToken', JSON.stringify(1));
-      setIsDisabled(false);
     } else {
       setIsDisabled(true);
     }
@@ -47,14 +40,14 @@ const Login = () => {
       <h1>Login</h1>
       <input
         type="email"
-        onChange={ handleUser }
+        onChange={ ({ target: { value } }) => setEmail(value) }
         placeholder="Digite seu email"
         name="user"
         data-testid="email-input"
       />
       <input
         type="password"
-        onChange={ handlePassword }
+        onChange={ ({ target: { value } }) => setPassword(value) }
         placeholder="Digite a senha"
         name="password"
         data-testid="password-input"
