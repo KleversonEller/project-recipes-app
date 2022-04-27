@@ -41,19 +41,19 @@ function App() {
             />
             <Route
               path="/foods/:id"
-              element={ <FoodRecipeDetails /> } // CRIAR COMPONENTE
+              element={ <FoodRecipeDetails /> }
             />
             <Route
               path="/drinks/:id"
-              element={ <DrinkRecipeDetails /> } // CRIAR COMPONENTE
+              element={ <DrinkRecipeDetails /> }
             />
             <Route
               path="/foods/:id/in-progress"
-              element={ <FoodRecipeInProgress /> } // CRIAR COMPONENTE
+              element={ <FoodRecipeInProgress /> }
             />
             <Route
               path="/drinks/:id/in-progress"
-              element={ <DrinkRecipeInProgress /> } // CRIAR COMPONENTE
+              element={ <DrinkRecipeInProgress /> }
             />
             <Route
               path="/explore"

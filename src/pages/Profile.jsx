@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import userLogout from '../utils/index';
@@ -7,18 +7,30 @@ import Header from '../components/Header';
 import '../css/profile.css';
 
 const Profile = () => {
-  const { email } = useSelector((state) => state?.user);
+  const { userEmail } = useSelector((state) => state?.user); // ESTADO GLOBAL DO REDUX
+  const email = JSON.parse(localStorage.getItem('user')); // localStorage
+  const [user, setUser] = useState('');
   const navigate = useNavigate();
 
   const handleClick = (location) => {
     navigate(location);
   };
 
+  useEffect(() => {
+    if (email === null) {
+      localStorage.setItem('user', JSON.stringify({ email: userEmail }));
+      setUser(userEmail);
+    } else {
+      setUser(email.email);
+    }
+    console.log(email);
+  }, []);
+
   return (
     <div className="profileContainer">
       <div className="profileHeaderContainer">
         <Header title="Profile" />
-        <h3 data-testid="profile-email">{email}</h3>
+        <h3 data-testid="profile-email">{user}</h3>
         <div className="profileNavButtonsContainer">
           <button
             onClick={ () => handleClick('/done-recipes') }
