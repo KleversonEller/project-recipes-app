@@ -6,10 +6,12 @@ import '../css/foods.css';
 
 const Foods = () => (
   <div className="foodsContainer">
-    <Header title="Foods" search="true" />
-    <Link to="/">
-      <button type="button">Login</button>
-    </Link>
+    <div>
+      <Header title="Foods" search="true" />
+      <Link to="/">
+        <button type="button">Login</button>
+      </Link>
+    </div>
     <Footer />
   </div>
 );
