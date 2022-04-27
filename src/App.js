@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import Login from './pages/Login';
 import Foods from './pages/Foods';
 import Drinks from './pages/Drinks';
@@ -15,40 +15,89 @@ import ExploreFoodsNationalities from './pages/ExploreFoodsNationalities';
 import Profile from './pages/Profile';
 import DoneRecipes from './pages/DoneRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes';
-import './css/footer.css';
+import store from './store';
+import FoodRecipeDetails from './pages/FoodRecipeDetails';
+import DrinkRecipeDetails from './pages/DrinkRecipeDetails';
+import FoodRecipeInProgress from './pages/FoodRecipeInProgress';
+import DrinkRecipeInProgress from './pages/DrinkRecipeInProgress';
 
 function App() {
   return (
     <div className="meals">
-      <BrowserRouter>
-        <Switch>
-          <Route exact path="/" component={ Login } />
-          <Route exact path="/foods" component={ Foods } />
-          <Route exact path="/drinks" component={ Drinks } />
-          <Route exact path="/explore" component={ Explore } />
-          <Route exact path="/explore/foods" component={ ExploreFoods } />
-          <Route exact path="/explore/drinks" component={ ExploreDrinks } />
-          <Route
-            exact
-            path="/explore/foods/ingredients"
-            component={ ExploreFoodsIngredients }
-          />
-          <Route
-            exact
-            path="/explore/drinks/ingredients"
-            component={ ExploreDrinksIngredients }
-          />
-          <Route
-            exact
-            path="/explore/foods/nationalities"
-            component={ ExploreFoodsNationalities }
-          />
-          <Route exact path="/profile" component={ Profile } />
-          <Route exact path="/done-recipes" component={ DoneRecipes } />
-          <Route exact path="/favorite-recipes" component={ FavoriteRecipes } />
-          <Route path="*" component={ NotFound } />
-        </Switch>
-      </BrowserRouter>
+      <Provider store={ store }>
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path="/"
+              element={ <Login /> }
+            />
+            <Route
+              path="/foods"
+              element={ <Foods /> }
+            />
+            <Route
+              path="/drinks"
+              element={ <Drinks /> }
+            />
+            <Route
+              path="/foods/:id"
+              element={ <FoodRecipeDetails /> } // CRIAR COMPONENTE
+            />
+            <Route
+              path="/drinks/:id"
+              element={ <DrinkRecipeDetails /> } // CRIAR COMPONENTE
+            />
+            <Route
+              path="/foods/:id/in-progress"
+              element={ <FoodRecipeInProgress /> } // CRIAR COMPONENTE
+            />
+            <Route
+              path="/drinks/:id/in-progress"
+              element={ <DrinkRecipeInProgress /> } // CRIAR COMPONENTE
+            />
+            <Route
+              path="/explore"
+              element={ <Explore /> }
+            />
+            <Route
+              path="/explore/foods"
+              element={ <ExploreFoods /> }
+            />
+            <Route
+              path="/explore/drinks"
+              element={ <ExploreDrinks /> }
+            />
+            <Route
+              path="/explore/foods/ingredients"
+              element={ <ExploreFoodsIngredients /> }
+            />
+            <Route
+              path="/explore/drinks/ingredients"
+              element={ <ExploreDrinksIngredients /> }
+            />
+            <Route
+              path="/explore/foods/nationalities"
+              element={ <ExploreFoodsNationalities /> }
+            />
+            <Route
+              path="/profile"
+              element={ <Profile /> }
+            />
+            <Route
+              path="/done-recipes"
+              element={ <DoneRecipes /> }
+            />
+            <Route
+              path="/favorite-recipes"
+              element={ <FavoriteRecipes /> }
+            />
+            <Route
+              path="*"
+              element={ <NotFound /> }
+            />
+          </Routes>
+        </BrowserRouter>
+      </Provider>
     </div>
   );
 }

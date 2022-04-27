@@ -1,0 +1,24 @@
+.profileContainer {
+  align-items: center;
+
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  height: 640px;
+  justify-content: space-between;
+  margin: auto;
+  padding-top: 20px;
+  width: 100%;
+}
+
+.profileHeaderContainer {
+
+  /* border: 1px yellowgreen solid; */
+  text-align: center;
+}
+
+.profileNavButtonsContainer {
+  width: fit-content;
+
+  /* border: 1px blue solid; */
+}

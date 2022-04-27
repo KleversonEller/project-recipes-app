@@ -4,22 +4,10 @@
   border: solid 2px black;
   display: flex;
   justify-content: space-between;
-  margin: auto;
-  padding-bottom: 5px;
-  padding-top: 5px;
-  position: fixed;
-  top: 580px;
-  width: 88%;
+  padding: 5px;
+  width: 100%;
 }
 
 .footerContainer img {
   border: solid #e5e5e5 1px;
-}
-
-.foodsContainer, .drinksContainer, .exploreContainer {
-  border: solid 2px black;
-  height: 640px;
-  margin-left: -20px;
-  text-align: center;
-  width: 320px;
 }

@@ -22,8 +22,11 @@
     "react-dom": "^16.13.1",
     "react-icons": "^4.3.1",
     "react-logger": "^1.1.0",
-    "react-router-dom": "^5.1.2",
+    "react-redux": "^8.0.1",
+    "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.0",
+    "redux": "^4.2.0",
+    "redux-thunk": "^2.4.1",
     "websocket-extensions": ">=0.1.4"
   },
   "scripts": {
@@ -64,6 +67,7 @@
     "mochawesome": "^6.1.1",
     "mochawesome-merge": "^4.1.0",
     "mochawesome-report-generator": "^5.1.0",
+    "redux-devtools-extension": "^2.13.9",
     "stylelint": "^13.8.0",
     "stylelint-order": "^4.1.0"
   },
