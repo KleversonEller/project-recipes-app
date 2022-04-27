@@ -4,6 +4,12 @@ const api = axios.create({
   baseURL: 'https://www.themealdb.com/api/json/v1/1',
 });
 
+export const fetchAllMeal = async () => {
+  const limiterArray = 12;
+  const { data } = await api.get('/search.php?s=');
+  return data.meals.slice(0, limiterArray);
+};
+
 export const fetchMealByName = async (name) => {
   const { data } = await api.get(`/search.php?s=${name}`);
   console.log(data.meals[0]);
