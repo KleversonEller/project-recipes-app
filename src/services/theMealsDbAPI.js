@@ -16,6 +16,12 @@ export const fetchMealsByCategory = async (category) => {
   return data.meals;
 };
 
+export const fetchMealsByFirstLetter = async (primeiraLetra) => {
+  const { data } = await api.get(`/search.php?f=${primeiraLetra}`);
+  console.log(data.meals);
+  return data.meals;
+};
+
 export const fetchMealsByArea = async (area) => {
   const { data } = await api.get(`/filter.php?a=${area}`);
   console.log(data.meals);

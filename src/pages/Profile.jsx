@@ -1,13 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import userLogout from '../utils/index';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import '../css/profile.css';
 
 const Profile = () => {
-  const { email } = useSelector((state) => state?.user);
+  // const { email } = useSelector((state) => state?.user);
+  const { email } = JSON.parse(localStorage.getItem('user'));
   const navigate = useNavigate();
 
   const handleClick = (location) => {
