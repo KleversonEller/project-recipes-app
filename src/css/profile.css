@@ -14,11 +14,20 @@
 .profileHeaderContainer {
 
   /* border: 1px yellowgreen solid; */
+  margin-top: 50px;
   text-align: center;
 }
 
 .profileNavButtonsContainer {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  margin-top: 20px;
   width: fit-content;
 
   /* border: 1px blue solid; */
+}
+
+.profileNavButtonsContainer button {
+  margin-top: 20px;
 }

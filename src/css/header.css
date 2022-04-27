@@ -1,11 +1,12 @@
-.footerContainer {
+.headerContainer {
   align-items: center;
   background-color: #e5e5e5;
-  border: solid 2px black;
   display: flex;
-  justify-content: space-between;
+  font-size: 2vh;
+  justify-content: space-around;
+  left: 0;
   padding: 5px;
   position: fixed;
-  top: 579px;
+  top: 0;
   width: 360px;
 }

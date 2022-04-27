@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import '../css/header.css';
 
 const Header = ({ title, search }) => {
   const [searchBar, setSearchBar] = useState(false);
   return (
-    <div>
+    <div className="headerContainer">
       <Link to="/profile">
         <img
           data-testid="profile-top-btn"
