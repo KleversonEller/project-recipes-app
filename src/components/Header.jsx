@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import userIcon from '../images/profileIcon.svg';
+import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 
 const Header = ({ title, search }) => {
@@ -11,7 +11,7 @@ const Header = ({ title, search }) => {
       <Link to="/profile">
         <img
           data-testid="profile-top-btn"
-          src={ userIcon }
+          src={ profileIcon }
           alt="Icone de usuario"
         />
       </Link>
