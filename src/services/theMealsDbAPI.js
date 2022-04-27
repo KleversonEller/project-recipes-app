@@ -1,86 +1,47 @@
-async function fetchMealByName(name) {
-  const url = `www.themealdb.com/api/json/v1/1/search.php?s=${name}`;
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-    return data.meals;
-  } catch (err) {
-    return err;
-  }
-}
+import axios from 'axios';
 
-async function fetchMealsByCategory(category) {
-  const url = `www.themealdb.com/api/json/v1/1/filter.php?c=${category}`;
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-    return data.meals;
-  } catch (err) {
-    return err;
-  }
-}
+const api = axios.create({
+  baseURL: 'https://www.themealdb.com/api/json/v1/1',
+});
 
-async function fetchMealsByArea(area) {
-  const url = `www.themealdb.com/api/json/v1/1/search.php?a=${area}`;
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-    return data.meals;
-  } catch (err) {
-    return err;
-  }
-}
+export const fetchMealByName = async (name) => {
+  const { data } = await api.get(`/search.php?s=${name}`);
+  console.log(data.meals[0]);
+  return data.meals[0];
+};
 
-async function fetchMealsByMainIngredient(mainIngredient) {
-  const url = `www.themealdb.com/api/json/v1/1/search.php?i=${mainIngredient}`;
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-    return data.meals;
-  } catch (err) {
-    return err;
-  }
-}
+export const fetchMealsByCategory = async (category) => {
+  const { data } = await api.get(`/filter.php?c=${category}`);
+  console.log(data.meals);
+  return data.meals;
+};
 
-async function fetchMealDetailsById(id) {
-  const url = `www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-    return data.meals;
-  } catch (err) {
-    return err;
-  }
-}
+export const fetchMealsByArea = async (area) => {
+  const { data } = await api.get(`/filter.php?a=${area}`);
+  console.log(data.meals);
+  return data.meals;
+};
 
-async function fetchRandomMeal() {
-  const url = 'www.themealdb.com/api/json/v1/1/random.php';
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-    return data.meals;
-  } catch (err) {
-    return err;
-  }
-}
+export const fetchMealsByMainIngredient = async (mainIngredient) => {
+  const { data } = await api.get(`/filter.php?i=${mainIngredient}`);
+  console.log(data.meals);
+  return data.meals;
+};
 
-async function fetchAllMealCategories() {
-  const url = 'www.themealdb.com/api/json/v1/1/categories.php';
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-    return data.categories;
-  } catch (err) {
-    return err;
-  }
-}
+export const fetchMealDetailsById = async (id) => {
+  const { data } = await api.get(`/lookup.php?i=${id}`);
+  console.log(data.meals[0]);
+  return data.meals[0];
+};
 
-export default {
-  fetchMealByName,
-  fetchMealsByMainIngredient,
-  fetchMealsByArea,
-  fetchMealsByCategory,
-  fetchRandomMeal,
-  fetchMealDetailsById,
-  fetchAllMealCategories,
+export const fetchRandomMeal = async () => {
+  const { data } = await api.get('/random.php');
+  console.log(data.meals[0]);
+  return data.meals[0];
+};
+
+export const fetchAllMealCategories = async () => {
+  const { data } = await api.get('/categories.php');
+  console.log(data.categories);
+  return data.categories;
 };
