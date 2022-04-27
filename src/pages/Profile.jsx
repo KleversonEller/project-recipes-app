@@ -8,7 +8,7 @@ import '../css/profile.css';
 
 const Profile = () => {
   // const { email } = useSelector((state) => state?.user);
-  const { email } = JSON.parse(localStorage.getItem('user'));
+  const email = JSON.parse(localStorage.getItem('user'));
   const navigate = useNavigate();
 
   const handleClick = (location) => {
