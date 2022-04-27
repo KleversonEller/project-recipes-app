@@ -10,3 +10,12 @@
   top: 0;
   width: 360px;
 }
+
+.searchBarContainer {
+  margin-top: 80px;
+}
+
+.searchBarContainer input {
+  border-radius: 10px;
+  padding: 8px;
+}

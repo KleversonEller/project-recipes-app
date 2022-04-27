@@ -8,35 +8,41 @@ import '../css/header.css';
 const Header = ({ title, search }) => {
   const [searchBar, setSearchBar] = useState(false);
   return (
-    <div className="headerContainer">
-      <Link to="/profile">
-        <img
-          data-testid="profile-top-btn"
-          src={ profileIcon }
-          alt="Icone de usuario"
-        />
-      </Link>
-      <h1 data-testid="page-title">
-        {title}
-      </h1>
-      {search && (
-        <button
-          type="button"
-          onClick={ () => setSearchBar(!searchBar) }
-        >
+    <div>
+      <div className="headerContainer">
+        <Link to="/profile">
           <img
-            data-testid="search-top-btn"
-            src={ searchIcon }
-            alt="Icone de busca"
+            data-testid="profile-top-btn"
+            src={ profileIcon }
+            alt="Icone de usuario"
           />
-        </button>)}
-      {searchBar && (
-        <input
-          type="text"
-          data-testid="search-input"
-          placeholder="Type your search"
-        />
-      )}
+        </Link>
+        <h1 data-testid="page-title">
+          {title}
+        </h1>
+        {search && (
+          <button
+            type="button"
+            onClick={ () => setSearchBar(!searchBar) }
+          >
+            <img
+              data-testid="search-top-btn"
+              src={ searchIcon }
+              alt="Icone de busca"
+            />
+          </button>)}
+      </div>
+      <div>
+        {searchBar && (
+          <div className="searchBarContainer">
+            <input
+              type="text"
+              data-testid="search-input"
+              placeholder="Type your search"
+            />
+          </div>
+        )}
+      </div>
     </div>
   );
 };
