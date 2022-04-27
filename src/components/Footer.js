@@ -5,7 +5,7 @@ import explore from '../images/exploreIcon.svg';
 import meal from '../images/mealIcon.svg';
 import '../css/footer.css';
 
-function Footer() {
+const Footer = () => {
   const history = useHistory();
   const handleDrinks = () => {
     history.push('/drinks');
@@ -46,6 +46,6 @@ function Footer() {
     </footer>
 
   );
-}
+};
 
 export default Footer;
