@@ -1,7 +1,7 @@
 import { SAVE_EMAIL } from '../actions';
 
 const INITIAL_STATE = {
-  email: null,
+  userEmail: undefined,
 };
 
 const user = (state = INITIAL_STATE, action) => {
@@ -9,7 +9,7 @@ const user = (state = INITIAL_STATE, action) => {
   case SAVE_EMAIL:
     return {
       ...state,
-      email: action.payload,
+      userEmail: action.payload,
     };
   default:
     return state;

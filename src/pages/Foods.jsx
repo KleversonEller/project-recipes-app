@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Cards from '../components/Cards';
@@ -10,9 +9,6 @@ const Foods = () => (
     <div>
       <Header title="Foods" search="true" />
       <Cards page="foods" />
-      <Link to="/">
-        <button type="button">Login</button>
-      </Link>
     </div>
     <Footer />
   </div>

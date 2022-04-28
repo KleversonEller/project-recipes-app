@@ -6,10 +6,6 @@
   justify-content: space-between;
   padding: 5px;
   position: fixed;
-  top: 576px;
-  width: 100%;
-}
-
-.footerContainer img {
-  border: solid #e5e5e5 1px;
+  top: 579px;
+  width: 360px;
 }

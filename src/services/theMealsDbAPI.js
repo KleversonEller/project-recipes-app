@@ -10,6 +10,12 @@ export const fetchMealByName = async (name) => {
   return data.meals[0];
 };
 
+export const fetchMealByName = async (name) => {
+  const { data } = await api.get(`/search.php?s=${name}`);
+  console.log(data.meals[0]);
+  return data.meals[0];
+};
+
 export const fetchMealsByCategory = async (category) => {
   const limiterArray = 12;
   const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`);

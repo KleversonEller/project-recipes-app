@@ -36,30 +36,32 @@ const Login = () => {
   }, [password]);
 
   return (
-    <div className="loginContainer">
-      <h1>Login</h1>
-      <input
-        type="email"
-        onChange={ ({ target: { value } }) => setEmail(value) }
-        placeholder="Digite seu email"
-        name="user"
-        data-testid="email-input"
-      />
-      <input
-        type="password"
-        onChange={ ({ target: { value } }) => setPassword(value) }
-        placeholder="Digite a senha"
-        name="password"
-        data-testid="password-input"
-      />
-      <button
-        type="button"
-        onClick={ handleClick }
-        disabled={ isDisabled }
-        data-testid="login-submit-btn"
-      >
-        Login
-      </button>
+    <div className="container">
+      <div className="loginContainer">
+        <h1>Login</h1>
+        <input
+          type="email"
+          onChange={ ({ target: { value } }) => setEmail(value) }
+          placeholder="Digite seu email"
+          name="user"
+          data-testid="email-input"
+        />
+        <input
+          type="password"
+          onChange={ ({ target: { value } }) => setPassword(value) }
+          placeholder="Digite a senha"
+          name="password"
+          data-testid="password-input"
+        />
+        <button
+          type="button"
+          onClick={ handleClick }
+          disabled={ isDisabled }
+          data-testid="login-submit-btn"
+        >
+          Login
+        </button>
+      </div>
     </div>
   );
 };

@@ -1,0 +1,21 @@
+.headerContainer {
+  align-items: center;
+  background-color: #e5e5e5;
+  display: flex;
+  font-size: 2vh;
+  justify-content: space-around;
+  left: 0;
+  padding: 5px;
+  position: fixed;
+  top: 0;
+  width: 360px;
+}
+
+.searchBarContainer {
+  margin-top: 80px;
+}
+
+.searchBarContainer input {
+  border-radius: 10px;
+  padding: 8px;
+}
