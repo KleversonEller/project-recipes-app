@@ -21,7 +21,7 @@ export const getMealRecipeById = async (id) => {
   return meals[0];
 };
 
-export const fetchMealsByCategory = async () => {
+export const fetchAllMeal = async () => {
   const limiterArray = 12;
   const { meals } = await (await fetch(`${baseURL}/search.php?s=`)).json();
   return meals.slice(0, limiterArray);

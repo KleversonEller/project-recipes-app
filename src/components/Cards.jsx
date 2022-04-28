@@ -11,8 +11,7 @@ import { fetchAllCocktail,
   fetchCategoryCocktail,
   fetchCocktailByCategory,
 } from '../services/theCockTailDbAPI';
-
-uuidv4();
+import './Cards.css';
 
 const Cards = ({ page }) => {
   const [list, setList] = useState([]);
@@ -86,7 +85,7 @@ const Cards = ({ page }) => {
   };
 
   return (
-    <div>
+    <div className="card-container">
       {categorys.length === 0 ? <p> Loading ... </p>
         : (
           <div>

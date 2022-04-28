@@ -8,8 +8,8 @@ const Foods = () => (
   <div className="foodsContainer">
     <div>
       <Header title="Foods" search="true" />
-      <Cards page="foods" />
     </div>
+    <Cards page="foods" />
     <Footer />
   </div>
 );
