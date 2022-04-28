@@ -1,20 +1,17 @@
 .profileContainer {
   align-items: center;
-
-  /* border: 1px solid red; */
   display: flex;
   flex-direction: column;
-  height: 640px;
-  justify-content: space-between;
+  height: 502px;
+  justify-content: center;
+  left: 0;
   margin: auto;
-  padding-top: 20px;
-  width: 100%;
+  position: fixed;
+  top: 60px;
+  width: 360px;
 }
 
 .profileHeaderContainer {
-
-  /* border: 1px yellowgreen solid; */
-  margin-top: 50px;
   text-align: center;
 }
 
@@ -24,10 +21,8 @@
   margin: auto;
   margin-top: 20px;
   width: fit-content;
-
-  /* border: 1px blue solid; */
 }
 
 .profileNavButtonsContainer button {
-  margin-top: 20px;
+  margin: 10px;
 }

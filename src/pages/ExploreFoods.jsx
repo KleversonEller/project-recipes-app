@@ -1,6 +1,5 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-// import { fetchRandomMeal } from '../services/theMealsDbAPI';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import '../css/explore.css';
@@ -8,22 +7,13 @@ import '../css/explore.css';
 const ExploreFoods = () => {
   const navigate = useNavigate();
 
-  const getId = async () => {
+  const getRandomFoodId = async () => {
     const URL = 'https://www.themealdb.com/api/json/v1/1/random.php';
-    const response = await fetch(URL);
-    const data = await response.json();
-    const idSurpriseMeal = data.meals[0].idMeal;
-    navigate(`/foods/${idSurpriseMeal}`);
+    const data = await (await fetch(URL)).json();
+    const { idMeal } = data.meals[0];
+    navigate(`/foods/${idMeal}`);
   };
 
-  /*
-  const getIdFood = async () => {
-    const id = await fetchRandomMeal();
-    const idSurpriseMeal = id.idMeal;
-    console.log(idSurpriseMeal);
-    navigate(`/foods/${idSurpriseMeal}`);
-  };
-*/
   return (
     <div>
       <Header title="Explore Foods" />
@@ -45,7 +35,7 @@ const ExploreFoods = () => {
         <button
           type="button"
           data-testid="explore-surprise"
-          onClick={ getId }
+          onClick={ getRandomFoodId }
         >
           Surprise me!
         </button>

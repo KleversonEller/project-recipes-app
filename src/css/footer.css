@@ -4,8 +4,10 @@
   border: solid 2px black;
   display: flex;
   justify-content: space-between;
+  left: 0;
+  margin: 0 auto;
   padding: 5px;
   position: fixed;
-  top: 579px;
+  top: 562px;
   width: 360px;
 }
