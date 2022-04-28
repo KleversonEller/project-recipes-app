@@ -1,69 +1,72 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { fetchAllMeal } from '../services/theMealsDbAPI';
-import fetchAllCocktail from '../services/theCockTailDbAPI';
+import { useNavigate } from 'react-router';
+import { fetchAllMeal, fetchCategoryMeal } from '../services/theMealsDbAPI';
+import { fetchAllCocktail, fetchCategoryCocktail } from '../services/theCockTailDbAPI';
 
 const Cards = ({ page }) => {
   const [list, setList] = useState([]);
+  const [categorys, setCategorys] = useState([]);
+  const navigate = useNavigate();
   useEffect(() => {
     const getList = async () => {
       const getApiFoods = await fetchAllMeal();
+      const getFoodsCategory = await fetchCategoryMeal();
       const getApiDrinks = await fetchAllCocktail();
+      const getDrinksCategory = await fetchCategoryCocktail();
+      console.log(getApiFoods);
       switch (page) {
       case 'food':
-        return setList(getApiFoods);
+        setList(getApiFoods.map((food) => ({
+          image: food.strMealThumb,
+          name: food.strMeal,
+        })));
+        setCategorys(getFoodsCategory.map((category) => category.strCategory));
+        break;
       case 'drink':
-        return setList(getApiDrinks);
+        setList(getApiDrinks.map((drink) => ({
+          image: drink.strDrinkThumb,
+          name: drink.strDrink,
+        })));
+        setCategorys(getDrinksCategory.map((category) => category.strCategory));
+        break;
       default:
-        return setList(['Sorry, we haven\'t found any recipes for these filters.']);
+        return navigate('/notfound');
       }
     };
     getList();
-  }, [page]);
+  }, []);
   return (
     <div>
-      {page === 'food' && (list.length > 1 ? (
-        list.map((food, index) => (
-          <div
-            key={ index }
-            data-testid={ `${index}-recipe-card` }
-          >
-            <img
-              data-testid={ `${index}-card-img` }
-              src={ food.strMealThumb }
-              width="200px"
-              alt={ `Ilustração de ${food.strMeal}` }
-            />
-            <span data-testid={ `${index}-card-name` }>
-              {food.strMeal}
-            </span>
-          </div>
-        )))
+      {categorys.length === 0 ? <p> Loading ... </p>
         : (
-          <alert>
-            { list[0] }
-          </alert>))}
-      {page === 'drink' && (list.length > 1 ? (
-        list.map((drink, index) => (
-          <div
-            key={ index }
-            data-testid={ `${index}-recipe-card` }
-          >
-            <img
-              data-testid={ `${index}-card-img` }
-              src={ drink.strDrinkThumb }
-              width="200px"
-              alt={ `Ilustração de ${drink.strDrink}` }
-            />
-            <span data-testid={ `${index}-card-name` }>
-              {drink.strDrink}
-            </span>
-          </div>
-        )))
-        : (
-          <alert>
-            { list[0] }
-          </alert>))}
+          <div>
+            {categorys.map((category, index) => (
+              <button
+                key={ index }
+                type="button"
+                data-testid={ `${category}-category-filter` }
+              >
+                { category }
+              </button>
+            ))}
+            {list.map((food, index) => (
+              <div
+                key={ index }
+                data-testid={ `${index}-recipe-card` }
+              >
+                <img
+                  data-testid={ `${index}-card-img` }
+                  src={ food.image }
+                  width="150px"
+                  alt={ `Ilustração de ${food.name}` }
+                />
+                <span data-testid={ `${index}-card-name` }>
+                  {food.name}
+                </span>
+              </div>
+            ))}
+          </div>)}
     </div>
   );
 };
