@@ -1,13 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router';
-import { fetchAllMeal, fetchCategoryMeal } from '../services/theMealsDbAPI';
-import { fetchAllCocktail, fetchCategoryCocktail } from '../services/theCockTailDbAPI';
+import { fetchAllMeal,
+  fetchCategoryMeal,
+  fetchMealsByCategory,
+} from '../services/theMealsDbAPI';
+import { fetchAllCocktail,
+  fetchCategoryCocktail,
+  fetchCocktailByCategory,
+} from '../services/theCockTailDbAPI';
 
 const Cards = ({ page }) => {
   const [list, setList] = useState([]);
   const [categorys, setCategorys] = useState([]);
+
   const navigate = useNavigate();
+
   useEffect(() => {
     const getList = async () => {
       const getApiFoods = await fetchAllMeal();
@@ -36,6 +44,25 @@ const Cards = ({ page }) => {
     };
     getList();
   }, []);
+
+  const changeFilter = async ({ target }) => {
+    const { name } = target;
+    if (page === 'food') {
+      const getList = await fetchMealsByCategory(name);
+      setList(getList.map((food) => ({
+        image: food.strMealThumb,
+        name: food.strMeal,
+      })));
+    }
+    if (page === 'drink') {
+      const getList = await fetchCocktailByCategory(name);
+      setList(getList.map((drink) => ({
+        image: drink.strDrinkThumb,
+        name: drink.strDrink,
+      })));
+    }
+  };
+
   return (
     <div>
       {categorys.length === 0 ? <p> Loading ... </p>
@@ -45,6 +72,8 @@ const Cards = ({ page }) => {
               <button
                 key={ index }
                 type="button"
+                name={ category }
+                onClick={ changeFilter }
                 data-testid={ `${category}-category-filter` }
               >
                 { category }

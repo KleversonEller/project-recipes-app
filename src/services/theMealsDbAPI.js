@@ -11,9 +11,9 @@ export const fetchMealByName = async (name) => {
 };
 
 export const fetchMealsByCategory = async (category) => {
+  const limiterArray = 12;
   const { data } = await api.get(`/filter.php?c=${category}`);
-  console.log(data.meals);
-  return data.meals;
+  return data.meals.slice(0, limiterArray);
 };
 
 export const fetchMealsByArea = async (area) => {
