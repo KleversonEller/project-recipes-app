@@ -7,12 +7,11 @@ import '../css/explore.css';
 const ExploreDrinks = () => {
   const navigate = useNavigate();
 
-  const getIdDrink = async () => {
+  const getRandomDrinkId = async () => {
     const URL = 'https://www.thecocktaildb.com/api/json/v1/1/random.php';
-    const response = await fetch(URL);
-    const data = await response.json();
-    const idSurpriseDrink = data.drinks[0].idDrink;
-    navigate(`/drinks/${idSurpriseDrink}`);
+    const data = await (await fetch(URL)).json();
+    const { idDrink } = data.drinks[0];
+    navigate(`/drinks/${idDrink}`);
   };
 
   return (
@@ -29,7 +28,7 @@ const ExploreDrinks = () => {
         <button
           type="button"
           data-testid="explore-surprise"
-          onClick={ getIdDrink }
+          onClick={ getRandomDrinkId }
         >
           Surprise me!
         </button>
