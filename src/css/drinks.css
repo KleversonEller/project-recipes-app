@@ -1,12 +1,12 @@
 .drinksContainer {
   align-items: center;
-
-  /* border: 1px solid red; */
   display: flex;
   flex-direction: column;
-  height: 576px;
-  justify-content: space-between;
+  height: 502px;
+  justify-content: center;
+  left: 0;
   margin: auto;
-  padding-top: 20px;
-  width: 100%;
+  position: fixed;
+  top: 60px;
+  width: 360px;
 }
