@@ -21,9 +21,10 @@ export const getMealRecipeById = async (id) => {
   return meals[0];
 };
 
-export const getRecomendedMeals = async () => {
+export const fetchMealsByCategory = async () => {
+  const limiterArray = 12;
   const { meals } = await (await fetch(`${baseURL}/search.php?s=`)).json();
-  return meals;
+  return meals.slice(0, limiterArray);
 };
 
 export const getSurpriseMeal = async () => {
@@ -31,9 +32,16 @@ export const getSurpriseMeal = async () => {
   return meals[0];
 };
 
-export const getAllMealCategories = async () => {
+export const fetchMealsByCategory = async (category) => {
+  const limiterArray = 12;
+  const { meals } = await (await fetch(`${baseURL}/filter.php?c=${category}`)).json();
+  return meals.slice(0, limiterArray);
+};
+
+export const fetchCategoryMeal = async () => {
+  const limiterArray = 5;
   const { meals } = await (await fetch(`${baseURL}/list.php?c=list`)).json();
-  return meals;
+  return meals.slice(0, limiterArray);
 };
 
 export const getAllMealNationalities = async () => {
