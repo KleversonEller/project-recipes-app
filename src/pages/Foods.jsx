@@ -9,7 +9,7 @@ const Foods = () => (
   <div className="foodsContainer">
     <div>
       <Header title="Foods" search="true" />
-      <Cards page="food" />
+      <Cards page="foods" />
       <Link to="/">
         <button type="button">Login</button>
       </Link>

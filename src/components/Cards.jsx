@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 import { fetchAllMeal,
   fetchCategoryMeal,
   fetchMealsByCategory,
@@ -10,9 +12,13 @@ import { fetchAllCocktail,
   fetchCocktailByCategory,
 } from '../services/theCockTailDbAPI';
 
+uuidv4();
+
 const Cards = ({ page }) => {
   const [list, setList] = useState([]);
   const [categorys, setCategorys] = useState([]);
+  const [fetchAll, setFetchAll] = useState(true);
+  const [filterSelected, setFilterSelected] = useState('');
 
   const navigate = useNavigate();
 
@@ -22,19 +28,20 @@ const Cards = ({ page }) => {
       const getFoodsCategory = await fetchCategoryMeal();
       const getApiDrinks = await fetchAllCocktail();
       const getDrinksCategory = await fetchCategoryCocktail();
-      console.log(getApiFoods);
       switch (page) {
-      case 'food':
+      case 'foods':
         setList(getApiFoods.map((food) => ({
           image: food.strMealThumb,
           name: food.strMeal,
+          id: food.idMeal,
         })));
         setCategorys(getFoodsCategory.map((category) => category.strCategory));
         break;
-      case 'drink':
+      case 'drinks':
         setList(getApiDrinks.map((drink) => ({
           image: drink.strDrinkThumb,
           name: drink.strDrink,
+          id: drink.idDrink,
         })));
         setCategorys(getDrinksCategory.map((category) => category.strCategory));
         break;
@@ -42,22 +49,37 @@ const Cards = ({ page }) => {
         return navigate('/notfound');
       }
     };
-    getList();
-  }, []);
+    if (fetchAll) { getList(); }
+  }, [fetchAll]);
 
   const changeFilter = async ({ target }) => {
     const { name } = target;
-    if (page === 'food') {
+
+    switch (name) {
+    case 'all':
+      setFetchAll(true); setFilterSelected('');
+      break;
+    case filterSelected:
+      setFetchAll(true); setFilterSelected('');
+      break;
+    default:
+      setFetchAll(false); setFilterSelected(name);
+      break;
+    }
+
+    if (page === 'foods' && name !== 'all') {
       const getList = await fetchMealsByCategory(name);
       setList(getList.map((food) => ({
         image: food.strMealThumb,
+        id: food.idMeal,
         name: food.strMeal,
       })));
     }
-    if (page === 'drink') {
+    if (page === 'drinks' && name !== 'all') {
       const getList = await fetchCocktailByCategory(name);
       setList(getList.map((drink) => ({
         image: drink.strDrinkThumb,
+        id: drink.idDrink,
         name: drink.strDrink,
       })));
     }
@@ -68,9 +90,17 @@ const Cards = ({ page }) => {
       {categorys.length === 0 ? <p> Loading ... </p>
         : (
           <div>
-            {categorys.map((category, index) => (
+            <button
+              type="button"
+              name="all"
+              onClick={ changeFilter }
+              data-testid="All-category-filter"
+            >
+              All
+            </button>
+            {categorys.map((category) => (
               <button
-                key={ index }
+                key={ uuidv4() }
                 type="button"
                 name={ category }
                 onClick={ changeFilter }
@@ -80,19 +110,21 @@ const Cards = ({ page }) => {
               </button>
             ))}
             {list.map((food, index) => (
-              <div
-                key={ index }
-                data-testid={ `${index}-recipe-card` }
-              >
-                <img
-                  data-testid={ `${index}-card-img` }
-                  src={ food.image }
-                  width="150px"
-                  alt={ `Ilustração de ${food.name}` }
-                />
-                <span data-testid={ `${index}-card-name` }>
-                  {food.name}
-                </span>
+              <div key={ uuidv4() }>
+                <Link
+                  to={ `/${page}/${food.id}` }
+                  data-testid={ `${index}-recipe-card` }
+                >
+                  <img
+                    data-testid={ `${index}-card-img` }
+                    src={ food.image }
+                    width="150px"
+                    alt={ `Ilustração de ${food.name}` }
+                  />
+                  <span data-testid={ `${index}-card-name` }>
+                    {food.name}
+                  </span>
+                </Link>
               </div>
             ))}
           </div>)}

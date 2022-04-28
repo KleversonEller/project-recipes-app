@@ -12,7 +12,8 @@ export const fetchMealByName = async (name) => {
 
 export const fetchMealsByCategory = async (category) => {
   const limiterArray = 12;
-  const { data } = await api.get(`/filter.php?c=${category}`);
+  const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`);
+  const data = await response.json();
   return data.meals.slice(0, limiterArray);
 };
 
@@ -48,12 +49,14 @@ export const fetchAllMealCategories = async () => {
 
 export const fetchAllMeal = async () => {
   const limiterArray = 12;
-  const { data } = await api.get('/search.php?s=');
+  const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+  const data = await response.json();
   return data.meals.slice(0, limiterArray);
 };
 
 export const fetchCategoryMeal = async () => {
   const limiterArray = 5;
-  const { data } = await api.get('/list.php?c=list');
+  const response = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
+  const data = await response.json();
   return data.meals.slice(0, limiterArray);
 };
