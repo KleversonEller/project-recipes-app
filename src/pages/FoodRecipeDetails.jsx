@@ -1,8 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-import ReactPlayer from 'react-player';
+import { useNavigate } from 'react-router-dom';
+import clipboardCopy from 'clipboard-copy';
 import shareIcon from '../images/shareIcon.svg';
 import heart from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 const FoodRecipeDetails = () => {
   const id = 52771;
@@ -14,7 +16,12 @@ const FoodRecipeDetails = () => {
   const [ingredients, setIngredients] = useState([]);
   const [measure, setMeasure] = useState([]);
   const [drink, setDrink] = useState([]);
-  const [randomDrinks, setRandomDrinks] = useState([]);
+  const [youtube, setYoutube] = useState();
+  const [copied, setCopied] = useState();
+  const [heartColor, setHeartColor] = useState(false);
+  const navigate = useNavigate();
+  const url = `/foods/${id}`;
+
   const getInfo = async () => {
     const URL = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
     const response = await fetch(URL);
@@ -23,24 +30,39 @@ const FoodRecipeDetails = () => {
     setFoodArray([data.meals[0]]);
     setIngredients(Object.keys(data.meals[0]).slice(nine, Tnine));
     setMeasure(Object.keys(data.meals[0]).slice(Tnine, Feight));
+    setYoutube((data.meals[0].strYoutube).replace('watch?v=', 'embed/'));
   };
+  // console.log(food);
 
   const getRecommendedDrink = async () => {
+    // const max = 19; // utilizar indicação aleatória no futuro
+    const six = 6;
+    // const i = Math.floor((Math.random() * max)); // gerar numero aleatório
     const URL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
     const response = await fetch(URL);
     const data = await response.json();
-    setDrink([data.drinks]);
-    setRandomDrinks([drink[0][0],
-      drink[0][1], drink[0][2], drink[0][3], drink[0][4], drink[0][5]]);
+    const drinks = ((data.drinks).slice(0, six));
+    setDrink(drinks);
+  };
+
+  const recipeInProgress = () => {
+    navigate(`/foods/${id}/in-progress`);
+  };
+
+  const copyRecipe = () => {
+    const time = 2000;
+    const copy = clipboardCopy;
+    copy(`http://localhost:3000${url}`);
+    setCopied('Link copied!');
+    setTimeout(() => {
+      setCopied('');
+    }, time);
   };
 
   useEffect(() => {
     getInfo();
     getRecommendedDrink();
   }, []);
-  console.log('fo', food);
-  console.log('d', drink);
-  console.log('g', randomDrinks);
 
   return (
     <div className="foodRecipeDetailsContainer">
@@ -53,43 +75,60 @@ const FoodRecipeDetails = () => {
             className="foodRecipeDetailsImage"
           />
           <div className="iconsContainer">
-            <img
-              className="foodRecipeDetailsIcon"
-              src={ shareIcon }
-              alt="share-button"
-              data-testid="share-btn"
-            />
-            <img
-              className="foodRecipeDetailsIcon"
-              src={ heart }
-              alt="heart-button"
-              data-testid="favorite-btn"
-            />
+            <button
+              type="button"
+              onClick={ copyRecipe }
+            >
+              <img
+                className="foodRecipeDetailsIcon"
+                src={ shareIcon }
+                alt="share-button"
+                data-testid="share-btn"
+              />
+            </button>
+            <button
+              type="button"
+              onClick={ () => setHeartColor(!heartColor) }
+            >
+              <img
+                className="foodRecipeDetailsIcon"
+                src={ heartColor ? blackHeartIcon : heart }
+                alt="heart-button"
+                data-testid="favorite-btn"
+              />
+            </button>
           </div>
-          <h2 data-testid="recipe-title">{food.strMeal}</h2>
-          <p data-testid="recipe-category">{food.strCategory}</p>
-          <p>Ingredients</p>
+          <div className="linkCopiedContainer">
+            {copied && <p>{ copied }</p> }
+          </div>
+          <div>
+            <h2 data-testid="recipe-title">{food.strMeal}</h2>
+            <h4 data-testid="recipe-category">{food.strCategory}</h4>
+          </div>
+          <h5>Ingredients</h5>
           <div>
             {
-              foodArra.map((item, index) => (
-                <section key={ index } className="foodRecipeDetailsIngredients">
+              foodArra.map((item) => (
+                <section key={ item } className="foodRecipeDetailsIngredients">
                   <div className="foodIngredientsContainer">
                     {
-                      ingredients.map((ing) => (
+                      ingredients.map((ing, index) => (
                         <p
                           key={ ing }
                           data-testid={ `${index}-ingredient-name-and-measure` }
                         >
                           {item[ing]}
-                          :
                         </p>
                       ))
                     }
                   </div>
-                  <div key={ index + 100 } className="foodMesaureContainer">
+                  <div className="foodMesaureContainer">
                     {
-                      measure.map((meas) => (
-                        <p key={ meas }>
+                      measure.map((meas, index) => (
+                        <p
+                          key={ meas }
+                          data-testid={ `${index}-ingredient-name-and-measure` }
+                        >
                           {item[meas]}
                         </p>
                       ))
@@ -103,31 +142,40 @@ const FoodRecipeDetails = () => {
             <p>{ food.strInstructions }</p>
           </div>
           <div className="videoContainer">
-            <ReactPlayer
-              url={ food.strYoutube }
+            <iframe
+              src={ youtube }
+              title={ food.strMeal }
               width="100%"
-              height="100%"
-              controls
               data-testid="video"
             />
           </div>
           <h4>Recommended</h4>
-          <div>
-            <div className="drinkRecommendedContainer">
-              {drink && (
-                drink[0].map((item, index) => (
-                  <div key={ index } className="drinkRecommended">
-                    <img src={ item.strDrinkThumb } alt={ item.strDrink } />
-                    <h4>{item.strDrink}</h4>
-                    <p>{item.strAlcoholic}</p>
-                  </div>
-                ))
-              )}
-            </div>
+          <div className="drinkRecommendedContainer">
+            {drink && (
+              drink.map((item, index) => (
+                <div
+                  key={ index }
+                  className="drinkRecommended"
+                  data-testid={ `${index}-recomendation-card` }
+                >
+                  <img src={ item.strDrinkThumb } alt={ item.strDrink } />
+                  <h3 data-testid={ `${index}-recomendation-title` }>{item.strDrink}</h3>
+                  <p>{item.strAlcoholic}</p>
+                </div>
+              ))
+            )}
           </div>
         </div>
       )}
-      <button type="button" className="btn-start">Start Recipe</button>
+      <button
+        type="button"
+        className="btn-start"
+        data-testid="start-recipe-btn"
+        onClick={ recipeInProgress }
+      >
+        Start Recipe
+
+      </button>
     </div>
   );
 };

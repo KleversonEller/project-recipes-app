@@ -12,7 +12,6 @@
 .foodRecipeDetailsContainer {
   align-items: center;
   background-color: #0fa36b;
-  border: 2px solid yellow;
   display: flex;
   flex-direction: column;
   height: 640px;
@@ -22,11 +21,24 @@
 
 .foodRecipeDetailsContainer h5 {
   margin-top: 10px;
+  text-align: center;
+
 }
 
 .iconsContainer {
   display: flex;
   justify-content: center;
+}
+
+.iconsContainer button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.linkCopiedContainer p {
+  text-align: center;
 }
 
 .foodRecipeDetailsIcon {
@@ -43,12 +55,10 @@
 }
 
 .foodRecipeDetailsIngredients {
-  border: solid 2px black;
   display: flex;
   justify-content: center;
   margin: auto;
   margin-top: 5px;
-  overflow: scroll;
   width: 300px;
 }
 
@@ -71,36 +81,43 @@
 }
 
 .videoContainer {
-  border: solid 5px blue;
+  border: solid 5px white;
   height: 160px;
   margin: auto;
   margin-top: 20px;
   width: 250px;
 }
 
-h4 {
+h4, h2 {
+  color: white;
   margin-bottom: 5px;
   margin-top: 5px;
   text-align: center;
 }
 
+h2 {
+  text-shadow: 2px 2px 2px black;
+}
+
 .drinkRecommendedContainer {
-  border: solid 2px black;
+  border: solid 2px white;
   display: flex;
-  overflow: scroll;
+  margin-bottom: 50px;
+  overflow-x: scroll;
+  padding-bottom: 25px;
   width: 340px;
 }
 
 .drinkRecommended {
   align-items: center;
   background-color: white;
-  border: solid 2px white;
   border-radius: 10px;
   box-shadow: 2px 2px 8px 2px black;
   display: flex;
   flex-direction: column;
   font-size: 15px;
   margin: 10px;
+  margin-bottom: 5px;
   padding: 3px;
   text-align: center;
   width: 150px;
@@ -115,7 +132,8 @@ h4 {
 .btn-start {
   background-color: #6ce34f;
   bottom: 0;
-  height: 76;
+  color: white;
+  font-weight: 900;
   position: fixed;
   width: 339px;
 }
