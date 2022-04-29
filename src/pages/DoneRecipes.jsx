@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import DoneAndFavoriteCard from '../components/DoneAndFavoriteCard';
-import Header from '../components/Header';
+// import Header from '../components/Header';
 
 function DoneRecipes() {
   const [recipesFromStorage, setRecipesFromStorage] = useState([]);
@@ -31,7 +31,7 @@ function DoneRecipes() {
 
   return (
     <div className="doneRecipesContainer">
-      <Header headerTitle="Done Recipes" isSearchVisible={ false } />
+      {/* <Header headerTitle="Done Recipes" isSearchVisible={ false } /> */}
       <button
         type="button"
         data-testid="filter-by-all-btn"
