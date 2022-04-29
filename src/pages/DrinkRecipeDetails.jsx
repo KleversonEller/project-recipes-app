@@ -1,7 +1,171 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import clipboardCopy from 'clipboard-copy';
+import shareIcon from '../images/shareIcon.svg';
+import heart from '../images/whiteHeartIcon.svg';
+import heartBlack from '../images/blackHeartIcon.svg';
 
-const DrinkRecipeDetails = () => (
-  <div>DrinkRecipeDetails</div>
-);
+const DrinkRecipeDetails = () => {
+  const id = 178319;
+  const seventeen = 17;
+  const thirdTwo = 32;
+  const fortySeven = 47;
+  const [drink, setDrink] = useState();
+  const [drinkArra, setDrinkArray] = useState([]);
+  const [ingredients, setIngredients] = useState([]);
+  const [measure, setMeasure] = useState([]);
+  const [food, setFood] = useState([]);
+  const [copied, setCopied] = useState();
+  const [heartColor, setHeartColor] = useState(false);
+  const navigate = useNavigate();
+  const url = `/drinks/${id}`;
+
+  const getInfo = async () => {
+    const URL = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
+    const response = await fetch(URL);
+    const data = await response.json();
+    setDrink(data.drinks[0]);
+    setDrinkArray([data.drinks[0]]);
+    setIngredients(Object.keys(data.drinks[0]).slice(seventeen, thirdTwo));
+    setMeasure(Object.keys(data.drinks[0]).slice(thirdTwo, fortySeven));
+  };
+
+  const getRecommendedDrink = async () => {
+    // const max = 19; // utilizar indicação aleatória no futuro
+    const six = 6;
+    // const i = Math.floor((Math.random() * max)); // gerar numero aleatório
+    const URL = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+    const response = await fetch(URL);
+    const data = await response.json();
+    const foods = ((data.meals).slice(0, six));
+    // console.log('data', foods);
+    setFood(foods);
+  };
+
+  useEffect(() => {
+    getInfo();
+    getRecommendedDrink();
+  }, []);
+
+  const recipeInProgress = () => {
+    navigate(`/drinks/${id}/in-progress`);
+  };
+
+  const copyRecipe = () => {
+    const time = 2000;
+    const copy = clipboardCopy;
+    copy(`http://localhost:3000${url}`);
+    setCopied('Link copied!');
+    setTimeout(() => {
+      setCopied('');
+    }, time);
+  };
+
+  return (
+    <div className="foodRecipeDetailsContainer">
+      { drink && (
+        <div>
+          <img
+            src={ drink.strDrinkThumb }
+            alt={ `${drink.strDrink}` }
+            data-testid="recipe-photo"
+            className="foodRecipeDetailsImage"
+          />
+          <div className="iconsContainer">
+            <button
+              type="button"
+              onClick={ copyRecipe }
+            >
+              <img
+                className="foodRecipeDetailsIcon"
+                src={ shareIcon }
+                alt="share-button"
+                data-testid="share-btn"
+              />
+            </button>
+            <button
+              type="button"
+              onClick={ () => setHeartColor(!heartColor) }
+            >
+              <img
+                className="foodRecipeDetailsIcon"
+                src={ heartColor ? heartBlack : heart }
+                alt="heart-button"
+                data-testid="favorite-btn"
+              />
+            </button>
+          </div>
+          <div>
+            {copied && <p>{ copied }</p> }
+          </div>
+          <div>
+            <h2 data-testid="recipe-title">{drink.strDrink}</h2>
+            <h4 data-testid="recipe-category">{drink.strAlcoholic}</h4>
+          </div>
+          <h5>Ingredients</h5>
+          <div>
+            {
+              drinkArra.map((item) => (
+                <section key={ item } className="foodRecipeDetailsIngredients">
+                  <div className="foodIngredientsContainer">
+                    {
+                      ingredients.map((ing, index) => (
+                        <p
+                          key={ ing }
+                          data-testid={ `${index}-ingredient-name-and-measure` }
+                        >
+                          {item[`strIngredient${index + 1}`]}
+                        </p>
+                      ))
+                    }
+                  </div>
+                  <div className="foodMesaureContainer">
+                    {
+                      measure.map((meas, index) => (
+                        <p
+                          key={ meas }
+                          data-testid={ `${index}-ingredient-name-and-measure` }
+                        >
+                          {item[`strMeasure${index + 1}`]}
+                        </p>
+                      ))
+                    }
+                  </div>
+                </section>
+              ))
+            }
+          </div>
+          <div data-testid="instructions" className="foodInstructions">
+            <p>{ drink.strInstructions }</p>
+          </div>
+          <h4>Recommended</h4>
+          <div className="drinkRecommendedContainer">
+            {food && (
+              food.map((item, index) => (
+                <div
+                  key={ index }
+                  className="drinkRecommended"
+                  data-testid={ `${index}-recomendation-card` }
+                >
+                  <img src={ item.strMealThumb } alt={ item.strMeal } />
+                  <h3 data-testid={ `${index}-recomendation-title` }>{item.strMeal}</h3>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+      )}
+      <button
+        type="button"
+        className="btn-start"
+        data-testid="start-recipe-btn"
+        onClick={ recipeInProgress }
+      >
+        Start Recipe
+
+      </button>
+    </div>
+  );
+};
 
 export default DrinkRecipeDetails;
