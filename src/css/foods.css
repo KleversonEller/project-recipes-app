@@ -136,4 +136,7 @@ h2 {
   font-weight: 900;
   position: fixed;
   width: 339px;
+  position: fixed;
+  top: 60px;
+  width: 360px;
 }

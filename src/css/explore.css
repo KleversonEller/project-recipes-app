@@ -1,13 +1,15 @@
 .exploreContainer {
   align-items: center;
-
-  /* border: 1px solid red; */
   display: flex;
   flex-direction: column;
-  height: 576px;
+  height: 502px;
+  justify-content: center;
+  left: 0;
   margin: auto;
   padding-top: 20px;
-  width: 100%;
+  position: fixed;
+  top: 60px;
+  width: 360px;
 }
 
 .buttonsContainer {
@@ -29,9 +31,8 @@
 .exploreNavButtonsContainer {
   display: flex;
   flex-direction: column;
-  margin-top: 100px;
 }
 
 .exploreNavButtonsContainer button {
-  margin-top: 20px;
+  margin: 20px;
 }
