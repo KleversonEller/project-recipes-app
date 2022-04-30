@@ -18,9 +18,8 @@ const DrinkRecipeDetails = () => {
   const [food, setFood] = useState([]);
   const [copied, setCopied] = useState();
   const [heartColor, setHeartColor] = useState(false);
-  const [localFavorite, setLocalFavorite] = useState([]);
-  // const [startRecipe, setStartRecipe] = useState(false);
-  // const [namebtn, setNameBtn] = useState('Start Recipe');
+  const [startRecipe, setStartRecipe] = useState(false);
+  const [namebtn, setNameBtn] = useState('Start Recipe');
   const navigate = useNavigate();
   const url = `/drinks/${id}`;
 
@@ -48,6 +47,12 @@ const DrinkRecipeDetails = () => {
   };
 
   const recipeInProgress = () => {
+    setStartRecipe(true);
+    localStorage.setItem('inProgressRecipes',
+      JSON.stringify({ drinks: { id } }));
+    if (startRecipe) {
+      setNameBtn('Continue Recipe');
+    }
     navigate(`/drinks/${id}/in-progress`);
   };
 
@@ -81,6 +86,15 @@ const DrinkRecipeDetails = () => {
     }
   };
 
+  const verifyInProgressRecipe = () => {
+    const localInProgressRecipe = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const IDlocalInProgressRecipe = Object.keys(localInProgressRecipe.drinks);
+    console.log(IDlocalInProgressRecipe, id);
+    if (IDlocalInProgressRecipe[0] === id) {
+      setNameBtn('Continue Recipe');
+    }
+  };
+
   const verifyFavorite = () => {
     // console.log(localFavorite.length);
     const local = JSON.parse(localStorage.getItem(('favoriteRecipes')));
@@ -100,9 +114,7 @@ const DrinkRecipeDetails = () => {
   useEffect(() => {
     getInfo();
     getRecommendedDrink();
-    if (localStorage.favoriteRecipes !== null) {
-      setLocalFavorite(JSON.parse(localStorage.getItem(('favoriteRecipes'))));
-    }
+    verifyInProgressRecipe();
     verifyFavorite();
   }, []);
 
@@ -206,8 +218,7 @@ const DrinkRecipeDetails = () => {
         data-testid="start-recipe-btn"
         onClick={ recipeInProgress }
       >
-        Start Recipe
-
+        { namebtn }
       </button>
     </div>
   );

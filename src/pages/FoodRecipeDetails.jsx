@@ -20,7 +20,6 @@ const FoodRecipeDetails = () => {
   const [youtube, setYoutube] = useState();
   const [copied, setCopied] = useState();
   const [heartColor, setHeartColor] = useState(false);
-  // const [localFavorite, setLocalFavorite] = useState([]);
   const [startRecipe, setStartRecipe] = useState(false);
   const [namebtn, setNameBtn] = useState('Start Recipe');
   const navigate = useNavigate();
@@ -92,9 +91,9 @@ const FoodRecipeDetails = () => {
 
   const verifyInProgressRecipe = () => {
     const localInProgressRecipe = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    const IDlocalInProgressRecipe = localInProgressRecipe.meals.id;
+    const IDlocalInProgressRecipe = Object.keys(localInProgressRecipe.meals);
     console.log(IDlocalInProgressRecipe, id);
-    if (IDlocalInProgressRecipe === id) {
+    if (IDlocalInProgressRecipe[0] === id) {
       setNameBtn('Continue Recipe');
     }
   };
@@ -109,12 +108,6 @@ const FoodRecipeDetails = () => {
       setHeartColor(true);
     }
   };
-
-  /*
-  useEffect(() => {
-    verifyFavorite();
-  }, [localFavorite]);
-  */
 
   useEffect(() => {
     getInfo();
