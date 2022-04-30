@@ -1,13 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import clipboardCopy from 'clipboard-copy';
 import shareIcon from '../images/shareIcon.svg';
 import heart from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 const FoodRecipeDetails = () => {
-  const id = 52771;
+  const params = useParams();
+  const { id } = params;
   const nine = 9;
   const Tnine = 29;
   const Feight = 48;
@@ -19,6 +20,9 @@ const FoodRecipeDetails = () => {
   const [youtube, setYoutube] = useState();
   const [copied, setCopied] = useState();
   const [heartColor, setHeartColor] = useState(false);
+  const [localFavorite, setLocalFavorite] = useState([]);
+  const [startRecipe, setStartRecipe] = useState(false);
+  const [namebtn, setNameBtn] = useState('Start Recipe');
   const navigate = useNavigate();
   const url = `/foods/${id}`;
 
@@ -46,6 +50,11 @@ const FoodRecipeDetails = () => {
   };
 
   const recipeInProgress = () => {
+    setStartRecipe(true);
+    localStorage.setItem('inProgressRecipes', JSON.stringify({ meals: { id } }));
+    if (startRecipe) {
+      setNameBtn('Continue Recipe');
+    }
     navigate(`/foods/${id}/in-progress`);
   };
 
@@ -59,9 +68,45 @@ const FoodRecipeDetails = () => {
     }, time);
   };
 
+  const addFavorite = () => {
+    setHeartColor(!heartColor);
+    if (!heartColor === true) {
+      const local = JSON.parse(localStorage.getItem(('favoriteRecipes')));
+      localStorage.setItem('favoriteRecipes', JSON.stringify([...local, {
+        id: food.idMeal,
+        type: food.strTags,
+        nationality: food.strArea,
+        category: food.strCategory,
+        alcoholicOrNot: false,
+        name: food.strMeal,
+        image: food.strMealThumb,
+      }]));
+    } else {
+      const local = JSON.parse(localStorage.getItem(('favoriteRecipes')));
+      const except = local.filter((item) => (item.id !== id));
+      localStorage.setItem('favoriteRecipes', JSON.stringify([...except]));
+    }
+  };
+
+  useEffect(() => {
+    // console.log(localFavorite.length);
+
+    const sameId = localFavorite.find((item) => (
+      item.id === id
+    ));
+    if (sameId) {
+      setHeartColor(true);
+      // console.log(localFavorite[0].id, id);
+      // console.log(sameId);
+    }
+  }, [localFavorite]);
+
   useEffect(() => {
     getInfo();
     getRecommendedDrink();
+    if (localStorage.favoriteRecipes !== null) {
+      setLocalFavorite(JSON.parse(localStorage.getItem(('favoriteRecipes'))));
+    }
   }, []);
 
   return (
@@ -88,7 +133,7 @@ const FoodRecipeDetails = () => {
             </button>
             <button
               type="button"
-              onClick={ () => setHeartColor(!heartColor) }
+              onClick={ addFavorite }
             >
               <img
                 className="foodRecipeDetailsIcon"
@@ -173,8 +218,7 @@ const FoodRecipeDetails = () => {
         data-testid="start-recipe-btn"
         onClick={ recipeInProgress }
       >
-        Start Recipe
-
+        { namebtn }
       </button>
     </div>
   );
