@@ -1,9 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import clipboardCopy from 'clipboard-copy';
 import shareIcon from '../images/shareIcon.svg';
 import heart from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
+import ButtonRecipe from '../components/ButtonRecipe';
 
 const DrinkRecipeDetails = () => {
   const params = useParams();
@@ -18,9 +21,6 @@ const DrinkRecipeDetails = () => {
   const [food, setFood] = useState([]);
   const [copied, setCopied] = useState();
   const [heartColor, setHeartColor] = useState(false);
-  const [startRecipe, setStartRecipe] = useState(false);
-  const [namebtn, setNameBtn] = useState('Start Recipe');
-  const navigate = useNavigate();
   const url = `/drinks/${id}`;
 
   const getInfo = async () => {
@@ -46,16 +46,6 @@ const DrinkRecipeDetails = () => {
     setFood(foods);
   };
 
-  const recipeInProgress = () => {
-    setStartRecipe(true);
-    localStorage.setItem('inProgressRecipes',
-      JSON.stringify({ drinks: { id } }));
-    if (startRecipe) {
-      setNameBtn('Continue Recipe');
-    }
-    navigate(`/drinks/${id}/in-progress`);
-  };
-
   const copyRecipe = () => {
     const time = 2000;
     const copy = clipboardCopy;
@@ -71,7 +61,7 @@ const DrinkRecipeDetails = () => {
     localStorage.setItem('favoriteRecipes', JSON.stringify([]));
     const local = JSON.parse(localStorage.getItem(('favoriteRecipes')));
     if (!heartColor === true) {
-      localStorage.setItem('favoriteRecipes', JSON.stringify([...local, {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([{
         id: drink.idDrink,
         type: 'drink',
         nationality: '',
@@ -86,15 +76,6 @@ const DrinkRecipeDetails = () => {
     }
   };
 
-  const verifyInProgressRecipe = () => {
-    const localInProgressRecipe = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    const IDlocalInProgressRecipe = Object.keys(localInProgressRecipe.drinks);
-    console.log(IDlocalInProgressRecipe, id);
-    if (IDlocalInProgressRecipe[0] === id) {
-      setNameBtn('Continue Recipe');
-    }
-  };
-
   const verifyFavorite = () => {
     // console.log(localFavorite.length);
     const local = JSON.parse(localStorage.getItem(('favoriteRecipes')));
@@ -106,7 +87,7 @@ const DrinkRecipeDetails = () => {
     }
     if (sameId) {
       setHeartColor(true);
-      console.log(localFavorite, id);
+      // console.log(localFavorite, id);
       // console.log(sameId);
     }
   };
@@ -114,7 +95,6 @@ const DrinkRecipeDetails = () => {
   useEffect(() => {
     getInfo();
     getRecommendedDrink();
-    verifyInProgressRecipe();
     verifyFavorite();
   }, []);
 
@@ -212,16 +192,13 @@ const DrinkRecipeDetails = () => {
           </div>
         </div>
       )}
-      <button
-        type="button"
-        className="btn-start"
-        data-testid="start-recipe-btn"
-        onClick={ recipeInProgress }
-      >
-        { namebtn }
-      </button>
+      <ButtonRecipe type="drink" />
     </div>
   );
 };
+
+DrinkRecipeDetails.propTypes = {
+  type: PropTypes.string,
+}.isRequired;
 
 export default DrinkRecipeDetails;

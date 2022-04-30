@@ -1,10 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import clipboardCopy from 'clipboard-copy';
 import shareIcon from '../images/shareIcon.svg';
 import heart from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
+import ButtonRecipe from '../components/ButtonRecipe';
 
 const FoodRecipeDetails = () => {
   const params = useParams();
@@ -20,9 +22,6 @@ const FoodRecipeDetails = () => {
   const [youtube, setYoutube] = useState();
   const [copied, setCopied] = useState();
   const [heartColor, setHeartColor] = useState(false);
-  const [startRecipe, setStartRecipe] = useState(false);
-  const [namebtn, setNameBtn] = useState('Start Recipe');
-  const navigate = useNavigate();
   const url = `/foods/${id}`;
 
   const getInfo = async () => {
@@ -47,16 +46,6 @@ const FoodRecipeDetails = () => {
     const drinks = ((data.drinks).slice(0, six));
     // console.log(drinks);
     setDrink(drinks);
-  };
-
-  const recipeInProgress = () => {
-    setStartRecipe(true);
-    localStorage.setItem('inProgressRecipes',
-      JSON.stringify({ meals: { id } }));
-    if (startRecipe) {
-      setNameBtn('Continue Recipe');
-    }
-    navigate(`/foods/${id}/in-progress`);
   };
 
   const copyRecipe = () => {
@@ -89,15 +78,6 @@ const FoodRecipeDetails = () => {
     }
   };
 
-  const verifyInProgressRecipe = () => {
-    const localInProgressRecipe = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    const IDlocalInProgressRecipe = Object.keys(localInProgressRecipe.meals);
-    console.log(IDlocalInProgressRecipe, id);
-    if (IDlocalInProgressRecipe[0] === id) {
-      setNameBtn('Continue Recipe');
-    }
-  };
-
   const verifyFavorite = () => {
     const local = JSON.parse(localStorage.getItem('favoriteRecipes'));
     let sameId;
@@ -113,7 +93,6 @@ const FoodRecipeDetails = () => {
     getInfo();
     getRecommendedDrink();
     verifyFavorite();
-    verifyInProgressRecipe();
   }, []);
 
   return (
@@ -210,25 +189,26 @@ const FoodRecipeDetails = () => {
                   className="drinkRecommended"
                   data-testid={ `${index}-recomendation-card` }
                 >
-                  <img src={ item.strDrinkThumb } alt={ item.strDrink } />
-                  <h3 data-testid={ `${index}-recomendation-title` }>{item.strDrink}</h3>
-                  <p>{item.strAlcoholic}</p>
+                  <Link to={ `/foods/${id}` }>
+                    <img src={ item.strDrinkThumb } alt={ item.strDrink } />
+                    <h3 data-testid={ `${index}-recomendation-title` }>
+                      {item.strDrink}
+                    </h3>
+                    <p>{item.strAlcoholic}</p>
+                  </Link>
                 </div>
               ))
             )}
           </div>
         </div>
       )}
-      <button
-        type="button"
-        className="btn-start"
-        data-testid="start-recipe-btn"
-        onClick={ recipeInProgress }
-      >
-        { namebtn }
-      </button>
+      <ButtonRecipe type="food" />
     </div>
   );
 };
+
+FoodRecipeDetails.propTypes = {
+  type: PropTypes.string,
+}.isRequired;
 
 export default FoodRecipeDetails;

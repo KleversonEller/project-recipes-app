@@ -102,6 +102,7 @@ h2 {
 .drinkRecommendedContainer {
   border: solid 2px white;
   display: flex;
+  margin: auto;
   margin-bottom: 50px;
   overflow-x: scroll;
   padding-bottom: 25px;
@@ -128,13 +129,4 @@ h2 {
   border: solid 3px white;
   border-radius: 10px;
   width: 140px;
-}
-
-.btn-start {
-  background-color: #6ce34f;
-  bottom: 0;
-  color: white;
-  font-weight: 900;
-  position: fixed;
-  width: 339px;
 }

@@ -1,0 +1,13 @@
+.buttomRecipeContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-start {
+  background-color: #6ce34f;
+  bottom: 0;
+  color: white;
+  font-weight: 900;
+  position: fixed;
+  width: 339px;
+}
