@@ -105,7 +105,9 @@ h2 {
   margin-bottom: 50px;
   overflow-x: scroll;
   padding-bottom: 25px;
-  width: 340px;
+  padding-left: 3px;
+  padding-top: 3px;
+  width: 330px;
 }
 
 .drinkRecommended {
@@ -116,8 +118,7 @@ h2 {
   display: flex;
   flex-direction: column;
   font-size: 15px;
-  margin: 10px;
-  margin-bottom: 5px;
+  margin: 9px;
   padding: 3px;
   text-align: center;
   width: 150px;
@@ -126,7 +127,7 @@ h2 {
 .drinkRecommended img {
   border: solid 3px white;
   border-radius: 10px;
-  width: 150px;
+  width: 140px;
 }
 
 .btn-start {

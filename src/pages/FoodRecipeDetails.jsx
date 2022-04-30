@@ -20,7 +20,7 @@ const FoodRecipeDetails = () => {
   const [youtube, setYoutube] = useState();
   const [copied, setCopied] = useState();
   const [heartColor, setHeartColor] = useState(false);
-  const [localFavorite, setLocalFavorite] = useState([]);
+  // const [localFavorite, setLocalFavorite] = useState([]);
   const [startRecipe, setStartRecipe] = useState(false);
   const [namebtn, setNameBtn] = useState('Start Recipe');
   const navigate = useNavigate();
@@ -46,12 +46,14 @@ const FoodRecipeDetails = () => {
     const response = await fetch(URL);
     const data = await response.json();
     const drinks = ((data.drinks).slice(0, six));
+    // console.log(drinks);
     setDrink(drinks);
   };
 
   const recipeInProgress = () => {
     setStartRecipe(true);
-    localStorage.setItem('inProgressRecipes', JSON.stringify({ meals: { id } }));
+    localStorage.setItem('inProgressRecipes',
+      JSON.stringify({ meals: { id } }));
     if (startRecipe) {
       setNameBtn('Continue Recipe');
     }
@@ -70,43 +72,55 @@ const FoodRecipeDetails = () => {
 
   const addFavorite = () => {
     setHeartColor(!heartColor);
+    localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+    const local = JSON.parse(localStorage.getItem(('favoriteRecipes')));
     if (!heartColor === true) {
-      const local = JSON.parse(localStorage.getItem(('favoriteRecipes')));
       localStorage.setItem('favoriteRecipes', JSON.stringify([...local, {
         id: food.idMeal,
-        type: food.strTags,
+        type: 'food',
         nationality: food.strArea,
         category: food.strCategory,
-        alcoholicOrNot: false,
+        alcoholicOrNot: '',
         name: food.strMeal,
         image: food.strMealThumb,
       }]));
     } else {
-      const local = JSON.parse(localStorage.getItem(('favoriteRecipes')));
       const except = local.filter((item) => (item.id !== id));
       localStorage.setItem('favoriteRecipes', JSON.stringify([...except]));
     }
   };
 
-  useEffect(() => {
-    // console.log(localFavorite.length);
+  const verifyInProgressRecipe = () => {
+    const localInProgressRecipe = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const IDlocalInProgressRecipe = localInProgressRecipe.meals.id;
+    console.log(IDlocalInProgressRecipe, id);
+    if (IDlocalInProgressRecipe === id) {
+      setNameBtn('Continue Recipe');
+    }
+  };
 
-    const sameId = localFavorite.find((item) => (
-      item.id === id
-    ));
+  const verifyFavorite = () => {
+    const local = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    let sameId;
+    if (local) {
+      sameId = local.find((item) => (item.id === id));
+    }
     if (sameId) {
       setHeartColor(true);
-      // console.log(localFavorite[0].id, id);
-      // console.log(sameId);
     }
+  };
+
+  /*
+  useEffect(() => {
+    verifyFavorite();
   }, [localFavorite]);
+  */
 
   useEffect(() => {
     getInfo();
     getRecommendedDrink();
-    if (localStorage.favoriteRecipes !== null) {
-      setLocalFavorite(JSON.parse(localStorage.getItem(('favoriteRecipes'))));
-    }
+    verifyFavorite();
+    verifyInProgressRecipe();
   }, []);
 
   return (

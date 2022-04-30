@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import clipboardCopy from 'clipboard-copy';
 import shareIcon from '../images/shareIcon.svg';
 import heart from '../images/whiteHeartIcon.svg';
-import heartBlack from '../images/blackHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 const DrinkRecipeDetails = () => {
-  const id = 178319;
+  const params = useParams();
+  const { id } = params;
   const seventeen = 17;
   const thirdTwo = 32;
   const fortySeven = 47;
@@ -17,6 +18,9 @@ const DrinkRecipeDetails = () => {
   const [food, setFood] = useState([]);
   const [copied, setCopied] = useState();
   const [heartColor, setHeartColor] = useState(false);
+  const [localFavorite, setLocalFavorite] = useState([]);
+  // const [startRecipe, setStartRecipe] = useState(false);
+  // const [namebtn, setNameBtn] = useState('Start Recipe');
   const navigate = useNavigate();
   const url = `/drinks/${id}`;
 
@@ -29,6 +33,7 @@ const DrinkRecipeDetails = () => {
     setIngredients(Object.keys(data.drinks[0]).slice(seventeen, thirdTwo));
     setMeasure(Object.keys(data.drinks[0]).slice(thirdTwo, fortySeven));
   };
+  // console.log(drink);
 
   const getRecommendedDrink = async () => {
     // const max = 19; // utilizar indicação aleatória no futuro
@@ -41,11 +46,6 @@ const DrinkRecipeDetails = () => {
     // console.log('data', foods);
     setFood(foods);
   };
-
-  useEffect(() => {
-    getInfo();
-    getRecommendedDrink();
-  }, []);
 
   const recipeInProgress = () => {
     navigate(`/drinks/${id}/in-progress`);
@@ -60,6 +60,51 @@ const DrinkRecipeDetails = () => {
       setCopied('');
     }, time);
   };
+
+  const addFavorite = () => {
+    setHeartColor(!heartColor);
+    localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+    const local = JSON.parse(localStorage.getItem(('favoriteRecipes')));
+    if (!heartColor === true) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([...local, {
+        id: drink.idDrink,
+        type: 'drink',
+        nationality: '',
+        category: drink.strCategory,
+        alcoholicOrNot: drink.strAlcoholic,
+        name: drink.strDrink,
+        image: drink.strDrinkThumb,
+      }]));
+    } else {
+      const except = local.filter((item) => (item.id !== id));
+      localStorage.setItem('favoriteRecipes', JSON.stringify([...except]));
+    }
+  };
+
+  const verifyFavorite = () => {
+    // console.log(localFavorite.length);
+    const local = JSON.parse(localStorage.getItem(('favoriteRecipes')));
+    let sameId;
+    if (local) {
+      sameId = local.find((item) => (
+        item.id === id
+      ));
+    }
+    if (sameId) {
+      setHeartColor(true);
+      console.log(localFavorite, id);
+      // console.log(sameId);
+    }
+  };
+
+  useEffect(() => {
+    getInfo();
+    getRecommendedDrink();
+    if (localStorage.favoriteRecipes !== null) {
+      setLocalFavorite(JSON.parse(localStorage.getItem(('favoriteRecipes'))));
+    }
+    verifyFavorite();
+  }, []);
 
   return (
     <div className="foodRecipeDetailsContainer">
@@ -85,11 +130,11 @@ const DrinkRecipeDetails = () => {
             </button>
             <button
               type="button"
-              onClick={ () => setHeartColor(!heartColor) }
+              onClick={ addFavorite }
             >
               <img
                 className="foodRecipeDetailsIcon"
-                src={ heartColor ? heartBlack : heart }
+                src={ heartColor ? blackHeartIcon : heart }
                 alt="heart-button"
                 data-testid="favorite-btn"
               />
