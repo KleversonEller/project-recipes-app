@@ -1,12 +1,16 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import clipboardCopy from 'clipboard-copy';
 import shareIcon from '../images/shareIcon.svg';
 import heart from '../images/whiteHeartIcon.svg';
-import heartBlack from '../images/blackHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+import ButtonRecipe from '../components/ButtonRecipe';
 
 const DrinkRecipeDetails = () => {
-  const id = 178319;
+  const params = useParams();
+  const { id } = params;
   const seventeen = 17;
   const thirdTwo = 32;
   const fortySeven = 47;
@@ -17,7 +21,6 @@ const DrinkRecipeDetails = () => {
   const [food, setFood] = useState([]);
   const [copied, setCopied] = useState();
   const [heartColor, setHeartColor] = useState(false);
-  const navigate = useNavigate();
   const url = `/drinks/${id}`;
 
   const getInfo = async () => {
@@ -29,6 +32,7 @@ const DrinkRecipeDetails = () => {
     setIngredients(Object.keys(data.drinks[0]).slice(seventeen, thirdTwo));
     setMeasure(Object.keys(data.drinks[0]).slice(thirdTwo, fortySeven));
   };
+  // console.log(drink);
 
   const getRecommendedDrink = async () => {
     // const max = 19; // utilizar indicação aleatória no futuro
@@ -42,15 +46,6 @@ const DrinkRecipeDetails = () => {
     setFood(foods);
   };
 
-  useEffect(() => {
-    getInfo();
-    getRecommendedDrink();
-  }, []);
-
-  const recipeInProgress = () => {
-    navigate(`/drinks/${id}/in-progress`);
-  };
-
   const copyRecipe = () => {
     const time = 2000;
     const copy = clipboardCopy;
@@ -60,6 +55,49 @@ const DrinkRecipeDetails = () => {
       setCopied('');
     }, time);
   };
+
+  const addFavorite = () => {
+    setHeartColor(!heartColor);
+    const favoriteDrink = {
+      id: drink.idDrink,
+      type: 'drink',
+      nationality: '',
+      category: drink.strCategory,
+      alcoholicOrNot: drink.strAlcoholic,
+      name: drink.strDrink,
+      image: drink.strDrinkThumb,
+    };
+    const local = JSON.parse(localStorage.getItem(('favoriteRecipes')));
+    if (!local || local.lenght === 0 || local === null) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([favoriteDrink]));
+    } else if (!heartColor === true) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([...local, favoriteDrink]));
+    } else {
+      const except = local.filter((item) => (item.id !== id));
+      localStorage.setItem('favoriteRecipes', JSON.stringify([...except]));
+    }
+  };
+
+  const verifyFavorite = () => {
+    const local = JSON.parse(localStorage.getItem(('favoriteRecipes')));
+    let sameId;
+    if (local) {
+      sameId = local.find((item) => (
+        item.id === id
+      ));
+    }
+    if (sameId) {
+      setHeartColor(true);
+      // console.log(localFavorite, id);
+      // console.log(sameId);
+    }
+  };
+
+  useEffect(() => {
+    getInfo();
+    getRecommendedDrink();
+    verifyFavorite();
+  }, []);
 
   return (
     <div className="foodRecipeDetailsContainer">
@@ -85,11 +123,11 @@ const DrinkRecipeDetails = () => {
             </button>
             <button
               type="button"
-              onClick={ () => setHeartColor(!heartColor) }
+              onClick={ addFavorite }
             >
               <img
                 className="foodRecipeDetailsIcon"
-                src={ heartColor ? heartBlack : heart }
+                src={ heartColor ? blackHeartIcon : heart }
                 alt="heart-button"
                 data-testid="favorite-btn"
               />
@@ -147,25 +185,23 @@ const DrinkRecipeDetails = () => {
                   className="drinkRecommended"
                   data-testid={ `${index}-recomendation-card` }
                 >
-                  <img src={ item.strMealThumb } alt={ item.strMeal } />
-                  <h3 data-testid={ `${index}-recomendation-title` }>{item.strMeal}</h3>
+                  <Link to={ `/foods/${item.idMeal}` }>
+                    <img src={ item.strMealThumb } alt={ item.strMeal } />
+                    <h3 data-testid={ `${index}-recomendation-title` }>{item.strMeal}</h3>
+                  </Link>
                 </div>
               ))
             )}
           </div>
         </div>
       )}
-      <button
-        type="button"
-        className="btn-start"
-        data-testid="start-recipe-btn"
-        onClick={ recipeInProgress }
-      >
-        Start Recipe
-
-      </button>
+      <ButtonRecipe type="drink" />
     </div>
   );
 };
+
+DrinkRecipeDetails.propTypes = {
+  type: PropTypes.string,
+}.isRequired;
 
 export default DrinkRecipeDetails;

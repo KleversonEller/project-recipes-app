@@ -24,6 +24,8 @@ const Login = () => {
       localStorage.setItem('user', JSON.stringify({ email }));
       localStorage.setItem('mealsToken', JSON.stringify(1));
       localStorage.setItem('cocktailsToken', JSON.stringify(1));
+      localStorage.setItem('doneRecipes', JSON.stringify([{}]));
+      localStorage.setItem('favoriteRecipes', JSON.stringify([]));
     } else {
       setIsDisabled(true);
     }

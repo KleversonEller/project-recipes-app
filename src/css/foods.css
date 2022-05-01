@@ -102,12 +102,16 @@ h2 {
 .drinkRecommendedContainer {
   border: solid 2px white;
   display: flex;
+  margin: auto;
   margin-bottom: 50px;
   overflow-x: scroll;
   padding-bottom: 25px;
-  width: 340px;
+  padding-left: 3px;
+  padding-top: 3px;
+  width: 300px;
 }
 
+/*
 .drinkRecommended {
   align-items: center;
   background-color: white;
@@ -116,24 +120,27 @@ h2 {
   display: flex;
   flex-direction: column;
   font-size: 15px;
-  margin: 10px;
-  margin-bottom: 5px;
+  margin: 9px;
   padding: 3px;
   text-align: center;
-  width: 150px;
+  width: 140px;
+}
+*/
+
+.drinkRecommended {
+  align-items: center;
+  background-color: white;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  font-size: 15px;
+  margin: 9px;
+  padding: 3px;
+  text-align: center;
+  width: 140px;
 }
 
 .drinkRecommended img {
-  border: solid 3px white;
   border-radius: 10px;
-  width: 150px;
-}
-
-.btn-start {
-  background-color: #6ce34f;
-  bottom: 0;
-  color: white;
-  font-weight: 900;
-  position: fixed;
-  width: 339px;
+  width: 120px;
 }
