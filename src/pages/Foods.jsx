@@ -7,7 +7,7 @@ import '../css/foods.css';
 const Foods = () => (
   <div className="foodsContainer">
     <div>
-      <Header title="Foods" search="true" />
+      <Header title="Meal" search="true" />
     </div>
     <Cards page="foods" />
     <Footer />

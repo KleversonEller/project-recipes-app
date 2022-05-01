@@ -8,7 +8,7 @@ import '../css/drinks.css';
 const Drinks = () => (
   <div className="drinksContainer">
     <div>
-      <Header title="Drinks" search="true" />
+      <Header title="Drink" search="true" />
     </div>
     <Cards page="drinks" />
     <Footer />

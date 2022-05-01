@@ -1,19 +1,21 @@
 // const { meals } = await (await fetch(`${baseURL}`)).json();
 const baseURL = 'https://www.themealdb.com/api/json/v1/1';
+const DOZE = 12;
+const CINCO = 5;
 
 export const getMealsByIngredient = async (ingredient) => {
   const { meals } = await (await fetch(`${baseURL}/filter.php?i=${ingredient}`)).json();
-  return meals;
+  return meals.slice(0, DOZE);
 };
 
 export const getMealByName = async (food) => {
   const { meals } = await (await fetch(`${baseURL}/search.php?s=${food}`)).json();
-  return meals[0];
+  return meals === null ? meals : meals.slice(0, DOZE);
 };
 
 export const getMealsByFirstLetter = async (letter) => {
   const { meals } = await (await fetch(`${baseURL}/search.php?f=${letter}`)).json();
-  return meals;
+  return meals.slice(0, DOZE);
 };
 
 export const getMealRecipeById = async (id) => {
@@ -22,9 +24,8 @@ export const getMealRecipeById = async (id) => {
 };
 
 export const fetchAllMeal = async () => {
-  const limiterArray = 12;
   const { meals } = await (await fetch(`${baseURL}/search.php?s=`)).json();
-  return meals.slice(0, limiterArray);
+  return meals.slice(0, DOZE);
 };
 
 export const getSurpriseMeal = async () => {
@@ -33,15 +34,13 @@ export const getSurpriseMeal = async () => {
 };
 
 export const fetchMealsByCategory = async (category) => {
-  const limiterArray = 12;
   const { meals } = await (await fetch(`${baseURL}/filter.php?c=${category}`)).json();
-  return meals.slice(0, limiterArray);
+  return meals.slice(0, DOZE);
 };
 
 export const fetchCategoryMeal = async () => {
-  const limiterArray = 5;
   const { meals } = await (await fetch(`${baseURL}/list.php?c=list`)).json();
-  return meals.slice(0, limiterArray);
+  return meals.slice(0, CINCO);
 };
 
 export const getAllMealNationalities = async () => {
