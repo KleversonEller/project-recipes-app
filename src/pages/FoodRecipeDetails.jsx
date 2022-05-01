@@ -60,18 +60,20 @@ const FoodRecipeDetails = () => {
 
   const addFavorite = () => {
     setHeartColor(!heartColor);
-    localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+    const favoriteFood = {
+      id: food.idMeal,
+      type: 'food',
+      nationality: food.strArea,
+      category: food.strCategory,
+      alcoholicOrNot: '',
+      name: food.strMeal,
+      image: food.strMealThumb,
+    };
     const local = JSON.parse(localStorage.getItem(('favoriteRecipes')));
-    if (!heartColor === true) {
-      localStorage.setItem('favoriteRecipes', JSON.stringify([...local, {
-        id: food.idMeal,
-        type: 'food',
-        nationality: food.strArea,
-        category: food.strCategory,
-        alcoholicOrNot: '',
-        name: food.strMeal,
-        image: food.strMealThumb,
-      }]));
+    if (!local || local.lenght === 0 || local === null) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([favoriteFood]));
+    } else if (!heartColor === true) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([...local, favoriteFood]));
     } else {
       const except = local.filter((item) => (item.id !== id));
       localStorage.setItem('favoriteRecipes', JSON.stringify([...except]));
@@ -189,7 +191,7 @@ const FoodRecipeDetails = () => {
                   className="drinkRecommended"
                   data-testid={ `${index}-recomendation-card` }
                 >
-                  <Link to={ `/foods/${id}` }>
+                  <Link to={ `/drinks/${item.idDrink}` }>
                     <img src={ item.strDrinkThumb } alt={ item.strDrink } />
                     <h3 data-testid={ `${index}-recomendation-title` }>
                       {item.strDrink}

@@ -108,9 +108,10 @@ h2 {
   padding-bottom: 25px;
   padding-left: 3px;
   padding-top: 3px;
-  width: 330px;
+  width: 300px;
 }
 
+/*
 .drinkRecommended {
   align-items: center;
   background-color: white;
@@ -122,11 +123,24 @@ h2 {
   margin: 9px;
   padding: 3px;
   text-align: center;
-  width: 150px;
+  width: 140px;
+}
+*/
+
+.drinkRecommended {
+  align-items: center;
+  background-color: white;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  font-size: 15px;
+  margin: 9px;
+  padding: 3px;
+  text-align: center;
+  width: 140px;
 }
 
 .drinkRecommended img {
-  border: solid 3px white;
   border-radius: 10px;
-  width: 140px;
+  width: 120px;
 }

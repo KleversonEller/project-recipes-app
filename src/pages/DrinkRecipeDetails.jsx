@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import clipboardCopy from 'clipboard-copy';
 import shareIcon from '../images/shareIcon.svg';
@@ -60,8 +60,20 @@ const DrinkRecipeDetails = () => {
     setHeartColor(!heartColor);
     localStorage.setItem('favoriteRecipes', JSON.stringify([]));
     const local = JSON.parse(localStorage.getItem(('favoriteRecipes')));
-    if (!heartColor === true) {
+    if (local === null) {
       localStorage.setItem('favoriteRecipes', JSON.stringify([{
+        id: drink.idDrink,
+        type: 'drink',
+        nationality: '',
+        category: drink.strCategory,
+        alcoholicOrNot: drink.strAlcoholic,
+        name: drink.strDrink,
+        image: drink.strDrinkThumb,
+      }]));
+    }
+    // console.log('LOCALbebida', local);
+    if (!heartColor === true) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([...local, {
         id: drink.idDrink,
         type: 'drink',
         nationality: '',
@@ -184,8 +196,10 @@ const DrinkRecipeDetails = () => {
                   className="drinkRecommended"
                   data-testid={ `${index}-recomendation-card` }
                 >
-                  <img src={ item.strMealThumb } alt={ item.strMeal } />
-                  <h3 data-testid={ `${index}-recomendation-title` }>{item.strMeal}</h3>
+                  <Link to={ `/foods/${item.idMeal}` }>
+                    <img src={ item.strMealThumb } alt={ item.strMeal } />
+                    <h3 data-testid={ `${index}-recomendation-title` }>{item.strMeal}</h3>
+                  </Link>
                 </div>
               ))
             )}
