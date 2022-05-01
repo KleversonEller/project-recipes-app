@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { fetchCategoryMeal } from '../services/theMealsDbAPI';
 import { fetchCategoryCocktail } from '../services/theCockTailDbAPI';
-import './Cards.css';
+import '../css/cards.css';
 
 const Cards = ({ page }) => {
   const { list } = useSelector((state) => state?.query);
