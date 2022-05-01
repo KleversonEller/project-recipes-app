@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
@@ -11,7 +12,7 @@ import { fetchAllCocktail,
   fetchCategoryCocktail,
   fetchCocktailByCategory,
 } from '../services/theCockTailDbAPI';
-import './Cards.css';
+import '../css/Cards.css';
 
 const Cards = ({ page }) => {
   const [list, setList] = useState([]);
@@ -85,47 +86,53 @@ const Cards = ({ page }) => {
   };
 
   return (
-    <div className="card-container">
+    <div>
       {categorys.length === 0 ? <p> Loading ... </p>
         : (
-          <div>
-            <button
-              type="button"
-              name="all"
-              onClick={ changeFilter }
-              data-testid="All-category-filter"
-            >
-              All
-            </button>
-            {categorys.map((category) => (
+          <div className="card-container">
+            <div className="card-container-filter">
               <button
-                key={ uuidv4() }
                 type="button"
-                name={ category }
+                name="all"
                 onClick={ changeFilter }
-                data-testid={ `${category}-category-filter` }
+                data-testid="All-category-filter"
               >
-                { category }
+                All
               </button>
-            ))}
-            {list.map((food, index) => (
-              <div key={ uuidv4() }>
-                <Link
-                  to={ `/${page}/${food.id}` }
-                  data-testid={ `${index}-recipe-card` }
+              {categorys.map((category) => (
+                <button
+                  key={ uuidv4() }
+                  type="button"
+                  name={ category }
+                  onClick={ changeFilter }
+                  data-testid={ `${category}-category-filter` }
                 >
-                  <img
-                    data-testid={ `${index}-card-img` }
-                    src={ food.image }
-                    width="150px"
-                    alt={ `Ilustração de ${food.name}` }
-                  />
-                  <span data-testid={ `${index}-card-name` }>
-                    {food.name}
-                  </span>
-                </Link>
-              </div>
-            ))}
+                  { category }
+                </button>
+              ))}
+            </div>
+            <hr />
+            <div className="card-container-cards">
+              {list.map((food, index) => (
+                <div key={ uuidv4() }>
+                  <Link
+                    to={ `/${page}/${food.id}` }
+                    data-testid={ `${index}-recipe-card` }
+                    className="cards"
+                  >
+                    <img
+                      data-testid={ `${index}-card-img` }
+                      src={ food.image }
+                      width="150px"
+                      alt={ `Ilustração de ${food.name}` }
+                    />
+                    <span data-testid={ `${index}-card-name` }>
+                      {food.name}
+                    </span>
+                  </Link>
+                </div>
+              ))}
+            </div>
           </div>)}
     </div>
   );

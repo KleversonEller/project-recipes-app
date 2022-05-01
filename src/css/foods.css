@@ -9,20 +9,25 @@
   width: 360px;
 }
 
+.foodContainerDetails {
+  margin-bottom: 50px;
+}
+
+.foodsCardsContainer {
+  height: 500px;
+  margin: auto;
+}
+
 .foodRecipeDetailsContainer {
   align-items: center;
-  background-color: #0fa36b;
   display: flex;
   flex-direction: column;
-  height: 640px;
-  overflow-y: scroll;
   width: 360px;
 }
 
 .foodRecipeDetailsContainer h5 {
   margin-top: 10px;
   text-align: center;
-
 }
 
 .iconsContainer {
@@ -36,6 +41,22 @@
   cursor: pointer;
   padding: 0;
 }
+
+.titleContainer {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.foodsTitle {
+  color: white;
+  font-size: 4vh;
+  margin-top: 10px;
+  text-align: center;
+  width: 340px;
+}
+
 
 .linkCopiedContainer p {
   text-align: center;
@@ -56,9 +77,11 @@
 
 .foodRecipeDetailsIngredients {
   display: flex;
+  height: 80px;
   justify-content: center;
   margin: auto;
   margin-top: 5px;
+  overflow: scroll;
   width: 300px;
 }
 
@@ -73,11 +96,16 @@
 }
 
 .foodInstructions {
+  border: solid 5px white;
+  border-radius: 10px;
   font-size: 14px;
+  height: 100px;
   margin: auto;
   margin-top: 10px;
+  overflow: scroll;
+  padding: 10px;
   text-align: justify;
-  width: 300px;
+  width: 340px;
 }
 
 .videoContainer {
@@ -88,7 +116,7 @@
   width: 250px;
 }
 
-h4, h2 {
+h4 {
   color: white;
   margin-bottom: 5px;
   margin-top: 5px;
@@ -103,34 +131,19 @@ h2 {
   border: solid 2px white;
   display: flex;
   margin: auto;
-  margin-bottom: 50px;
+  margin-bottom: 10px;
   overflow-x: scroll;
-  padding-bottom: 25px;
+  padding-bottom: 10px;
   padding-left: 3px;
   padding-top: 3px;
   width: 300px;
 }
 
-/*
 .drinkRecommended {
   align-items: center;
   background-color: white;
   border-radius: 10px;
   box-shadow: 2px 2px 8px 2px black;
-  display: flex;
-  flex-direction: column;
-  font-size: 15px;
-  margin: 9px;
-  padding: 3px;
-  text-align: center;
-  width: 140px;
-}
-*/
-
-.drinkRecommended {
-  align-items: center;
-  background-color: white;
-  border-radius: 10px;
   display: flex;
   flex-direction: column;
   font-size: 15px;

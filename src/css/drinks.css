@@ -2,11 +2,9 @@
   align-items: center;
   display: flex;
   flex-direction: column;
-  height: 502px;
-  justify-content: center;
-  left: 0;
+  height: 576px;
+  justify-content: space-between;
   margin: auto;
-  position: fixed;
-  top: 60px;
+  padding-top: 20px;
   width: 360px;
 }
