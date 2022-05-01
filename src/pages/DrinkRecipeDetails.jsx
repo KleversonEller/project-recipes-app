@@ -58,30 +58,20 @@ const DrinkRecipeDetails = () => {
 
   const addFavorite = () => {
     setHeartColor(!heartColor);
-    localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+    const favoriteDrink = {
+      id: drink.idDrink,
+      type: 'drink',
+      nationality: '',
+      category: drink.strCategory,
+      alcoholicOrNot: drink.strAlcoholic,
+      name: drink.strDrink,
+      image: drink.strDrinkThumb,
+    };
     const local = JSON.parse(localStorage.getItem(('favoriteRecipes')));
-    if (local === null) {
-      localStorage.setItem('favoriteRecipes', JSON.stringify([{
-        id: drink.idDrink,
-        type: 'drink',
-        nationality: '',
-        category: drink.strCategory,
-        alcoholicOrNot: drink.strAlcoholic,
-        name: drink.strDrink,
-        image: drink.strDrinkThumb,
-      }]));
-    }
-    // console.log('LOCALbebida', local);
-    if (!heartColor === true) {
-      localStorage.setItem('favoriteRecipes', JSON.stringify([...local, {
-        id: drink.idDrink,
-        type: 'drink',
-        nationality: '',
-        category: drink.strCategory,
-        alcoholicOrNot: drink.strAlcoholic,
-        name: drink.strDrink,
-        image: drink.strDrinkThumb,
-      }]));
+    if (!local || local.lenght === 0 || local === null) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([favoriteDrink]));
+    } else if (!heartColor === true) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([...local, favoriteDrink]));
     } else {
       const except = local.filter((item) => (item.id !== id));
       localStorage.setItem('favoriteRecipes', JSON.stringify([...except]));
@@ -89,7 +79,6 @@ const DrinkRecipeDetails = () => {
   };
 
   const verifyFavorite = () => {
-    // console.log(localFavorite.length);
     const local = JSON.parse(localStorage.getItem(('favoriteRecipes')));
     let sameId;
     if (local) {
