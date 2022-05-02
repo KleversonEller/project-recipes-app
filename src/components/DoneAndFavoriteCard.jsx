@@ -61,9 +61,13 @@ function DoneAndFavoriteCard({ index, setRecipesFromStorage,
         )}
       </Link>
       <div className="favoriteDetails">
-        <h1 className="done-fav-card-h1" data-testid={ `${index}-horizontal-name` }>
-          {name}
-        </h1>
+        <Link
+          to={ `/${type === 'drink' ? 'drinks' : 'foods'}/${id}` }
+        >
+          <h1 className="done-fav-card-h1" data-testid={ `${index}-horizontal-name` }>
+            {name}
+          </h1>
+        </Link>
         <h3 className="done-fav-card-h3" data-testid={ `${index}-horizontal-top-text` }>
           {type === 'food'
             ? `${nationality} - ${category}`

@@ -18,6 +18,7 @@ import '../css/cards.css';
 const Cards = ({ page }) => {
   const { list } = useSelector((state) => state?.query);
   const [categories, setCategories] = useState([]);
+  const [sel, setSel] = useState('all');
   const dispatch = useDispatch();
   const api = {
     AllMeals: () => getAllMeals(),
@@ -31,12 +32,13 @@ const Cards = ({ page }) => {
   };
 
   const changeCategory = (name) => {
-    api[name !== 'all' ? `${page}sByCategory` : `All${page}s`](name !== 'all' ? name : '')
+    api[name !== sel ? `${page}sByCategory` : `All${page}s`](name !== sel ? name : '')
       .then((result) => dispatch(saveSearch(result.map((item) => ({
         name: item[`str${page}`],
         id: item[`id${page}`],
         image: item[`str${page}Thumb`],
       })))));
+    setSel(name !== sel ? name : 'all');
   };
 
   useEffect(() => {
@@ -53,7 +55,7 @@ const Cards = ({ page }) => {
             <div className="card-container-filter">
               <button
                 type="button"
-                name="all"
+                name={ sel }
                 onClick={ ({ target: { name } }) => (changeCategory(name)) }
                 data-testid="All-category-filter"
               >
