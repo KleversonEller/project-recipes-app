@@ -12,7 +12,7 @@ import { fetchAllCocktail,
   fetchCategoryCocktail,
   fetchCocktailByCategory,
 } from '../services/theCockTailDbAPI';
-import '../css/Cards.css';
+import '../css/cards.css';
 
 const Cards = ({ page }) => {
   const [list, setList] = useState([]);
