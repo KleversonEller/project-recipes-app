@@ -19,7 +19,6 @@ const Cards = ({ page }) => {
   const { list } = useSelector((state) => state?.query);
   const [categories, setCategories] = useState([]);
   const dispatch = useDispatch();
-
   const api = {
     AllMeals: () => getAllMeals(),
     MealCategories: () => getMealCategories(),
@@ -50,7 +49,7 @@ const Cards = ({ page }) => {
     <div className="cardContainer">
       {!list ? <p> Loading ... </p>
         : (
-          <div>
+          <div className="card-container-filter">
             <button
               type="button"
               name="all"
@@ -67,11 +66,11 @@ const Cards = ({ page }) => {
                 onClick={ ({ target: { name } }) => (changeCategory(name)) }
                 data-testid={ `${category}-category-filter` }
               >
-                { category }
+                All
               </button>
             ))}
             {list.map((item, index) => (
-              <div key={ uuidv4() }>
+              <div key={ uuidv4() } className="card-container-cards">
                 <Link
                   to={ `/${api[page]}/${item.id}` }
                   data-testid={ `${index}-recipe-card` }

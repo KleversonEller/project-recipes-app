@@ -94,13 +94,17 @@ const FoodRecipeDetails = () => {
   return (
     <div className="foodRecipeDetailsContainer">
       { food && (
-        <div>
+        <div className="foodContainerDetails">
           <img
             src={ food.strMealThumb }
             alt={ `${food.strMeal}` }
             data-testid="recipe-photo"
             className="foodRecipeDetailsImage"
           />
+          <div className="titleContainer">
+            <h2 className="foodsTitle" data-testid="recipe-title">{food.strMeal}</h2>
+            <h4 data-testid="recipe-category">{food.strCategory}</h4>
+          </div>
           <div className="iconsContainer">
             <button
               type="button"
@@ -128,11 +132,7 @@ const FoodRecipeDetails = () => {
           <div className="linkCopiedContainer">
             {copied && <p>{ copied }</p> }
           </div>
-          <div>
-            <h2 data-testid="recipe-title">{food.strMeal}</h2>
-            <h4 data-testid="recipe-category">{food.strCategory}</h4>
-          </div>
-          <h5>Ingredients</h5>
+          <h4>Ingredients</h4>
           <div>
             {
               foodArray.map((item) => (
@@ -165,16 +165,9 @@ const FoodRecipeDetails = () => {
               ))
             }
           </div>
+          <h4>Instructions</h4>
           <div data-testid="instructions" className="foodInstructions">
             <p>{ food.strInstructions }</p>
-          </div>
-          <div className="videoContainer">
-            <iframe
-              src={ youtube }
-              title={ food.strMeal }
-              width="100%"
-              data-testid="video"
-            />
           </div>
           <h4>Recommended</h4>
           <div className="drinkRecommendedContainer">
@@ -195,6 +188,15 @@ const FoodRecipeDetails = () => {
                 </div>
               ))
             )}
+          </div>
+          <div className="videoContainer">
+            <iframe
+              src={ youtube }
+              title={ food.strMeal }
+              width="100%"
+              data-testid="video"
+              alt="Video da receita"
+            />
           </div>
         </div>
       )}

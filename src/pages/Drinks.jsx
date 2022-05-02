@@ -10,8 +10,12 @@ const Drinks = () => (
     <div>
       <Header title="Drink" search />
     </div>
-    <Cards page="Drink" />
-    <Footer />
+    <div className="foodsCardsContainer">
+      <Cards page="drinks" />
+    </div>
+    <div className="foodsFooterContainer">
+      <Footer />
+    </div>
   </div>
 );
 

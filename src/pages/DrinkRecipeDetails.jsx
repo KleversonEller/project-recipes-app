@@ -94,13 +94,17 @@ const DrinkRecipeDetails = () => {
   return (
     <div className="foodRecipeDetailsContainer">
       { drink && (
-        <div>
+        <div className="foodContainerDetails">
           <img
             src={ drink.strDrinkThumb }
             alt={ `${drink.strDrink}` }
             data-testid="recipe-photo"
             className="foodRecipeDetailsImage"
           />
+          <div>
+            <h2 className="foodsTitle" data-testid="recipe-title">{drink.strDrink}</h2>
+            <h4 data-testid="recipe-category">{drink.strAlcoholic}</h4>
+          </div>
           <div className="iconsContainer">
             <button
               type="button"
@@ -128,11 +132,7 @@ const DrinkRecipeDetails = () => {
           <div>
             {copied && <p>{ copied }</p> }
           </div>
-          <div>
-            <h2 data-testid="recipe-title">{drink.strDrink}</h2>
-            <h4 data-testid="recipe-category">{drink.strAlcoholic}</h4>
-          </div>
-          <h5>Ingredients</h5>
+          <h4>Ingredients</h4>
           <div>
             {
               drinkArray.map((item) => (
@@ -165,6 +165,7 @@ const DrinkRecipeDetails = () => {
               ))
             }
           </div>
+          <h4>Instructions</h4>
           <div data-testid="instructions" className="foodInstructions">
             <p>{ drink.strInstructions }</p>
           </div>

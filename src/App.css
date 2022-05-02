@@ -4,8 +4,37 @@
   padding: 0;
 }
 
+:root {
+
+  --main: rgb(182, 175, 182);
+
+  --second-color: #b7df10;
+
+  --ascent-color: #cb333b;
+
+  --green: #0fa36b;
+
+  --white: white;
+
+  --gold: gold;
+
+  --black: black;
+
+}
+
+body {
+  background-color: var(--green);
+  color: gold;
+}
+
+/*
+button {
+  background-color: gold;
+  border: none;
+}
+*/
+
 .meals {
-  background: #0fa36b;
   color: #464646;
   font-family: sans-serif;
   height: 640px;

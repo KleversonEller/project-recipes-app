@@ -9,8 +9,12 @@ const Foods = () => (
     <div>
       <Header title="Meal" search />
     </div>
-    <Cards page="Meal" />
-    <Footer />
+    <div className="foodsCardsContainer">
+      <Cards page="Meal" />
+    </div>
+    <div className="foodsFooterContainer">
+      <Footer />
+    </div>
   </div>
 );
 
