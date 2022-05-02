@@ -2,8 +2,7 @@ import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 const FoodRecipeInProgress = () => {
-  const params = useParams();
-  const { id } = params;
+  const { id } = useParams();
   const navigate = useNavigate();
 
   const returnFood = () => {

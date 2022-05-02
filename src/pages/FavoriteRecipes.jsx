@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-// import Header from '../components/Header';
+import Header from '../components/Header';
 import DoneAndFavoriteCard from '../components/DoneAndFavoriteCard';
+import '../css/favorites.css';
 
 function FavoriteRecipes() {
   const [recipesFromStorage, setRecipesFromStorage] = useState([]);
@@ -36,8 +37,8 @@ function FavoriteRecipes() {
   };
 
   return (
-    <>
-      {/* <Header headerTitle="Favorite Recipes" isSearchVisible={ false } /> */}
+    <div className="favoriteRecipesContainer">
+      <Header title="Favorite Recipes" search={ false } />
       <button
         type="button"
         data-testid="filter-by-all-btn"
@@ -73,7 +74,7 @@ function FavoriteRecipes() {
             />
           ))}
       </div>
-    </>
+    </div>
   );
 }
 

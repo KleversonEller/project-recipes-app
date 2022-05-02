@@ -23,7 +23,7 @@ export const getDrinkRecipeById = async (id) => {
   return drinks[0];
 };
 
-export const fetchAllCocktail = async () => {
+export const getAllDrinks = async () => {
   const { drinks } = await (await fetch(`${baseURL}/search.php?s=`)).json();
   return drinks.slice(0, DOZE);
 };
@@ -33,12 +33,12 @@ export const getSurpriseDrink = async () => {
   return drinks[0];
 };
 
-export const fetchCocktailByCategory = async (category) => {
+export const getDrinksByCategory = async (category) => {
   const { drinks } = await (await fetch(`${baseURL}/filter.php?c=${category}`)).json();
   return drinks.slice(0, DOZE);
 };
 
-export const fetchCategoryCocktail = async () => {
+export const getDrinkCategories = async () => {
   const { drinks } = await (await fetch(`${baseURL}/list.php?c=list`)).json();
   return drinks.slice(0, CINCO);
 };

@@ -7,53 +7,47 @@ import shareIcon from '../images/shareIcon.svg';
 import heart from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import ButtonRecipe from '../components/ButtonRecipe';
+import { getDrinkRecipeById } from '../services/theCockTailDbAPI';
+import { getAllMeals } from '../services/theMealsDbAPI';
 
 const DrinkRecipeDetails = () => {
-  const params = useParams();
-  const { id } = params;
-  const seventeen = 17;
-  const thirdTwo = 32;
-  const fortySeven = 47;
+  const { id } = useParams();
+  const SIX = 6;
+  const SEVENTEEN = 17;
+  const THIRD_TWO = 32;
+  const FORTY_SEVEN = 47;
+  const TIMER = 2000;
   const [drink, setDrink] = useState();
-  const [drinkArra, setDrinkArray] = useState([]);
+  const [drinkArray, setDrinkArray] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [measure, setMeasure] = useState([]);
   const [food, setFood] = useState([]);
   const [copied, setCopied] = useState();
   const [heartColor, setHeartColor] = useState(false);
-  const url = `/drinks/${id}`;
+  const { href } = window.location;
 
   const getInfo = async () => {
-    const URL = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
-    const response = await fetch(URL);
-    const data = await response.json();
-    setDrink(data.drinks[0]);
-    setDrinkArray([data.drinks[0]]);
-    setIngredients(Object.keys(data.drinks[0]).slice(seventeen, thirdTwo));
-    setMeasure(Object.keys(data.drinks[0]).slice(thirdTwo, fortySeven));
+    getDrinkRecipeById(id).then((data) => {
+      setDrink(data);
+      setDrinkArray([data]);
+      setIngredients(Object.keys(data).slice(SEVENTEEN, THIRD_TWO));
+      setMeasure(Object.keys(data).slice(THIRD_TWO, FORTY_SEVEN));
+    });
   };
-  // console.log(drink);
 
   const getRecommendedDrink = async () => {
-    // const max = 19; // utilizar indicação aleatória no futuro
-    const six = 6;
-    // const i = Math.floor((Math.random() * max)); // gerar numero aleatório
-    const URL = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
-    const response = await fetch(URL);
-    const data = await response.json();
-    const foods = ((data.meals).slice(0, six));
-    // console.log('data', foods);
-    setFood(foods);
+    getAllMeals().then((data) => {
+      setFood(data.slice(0, SIX));
+    });
   };
 
   const copyRecipe = () => {
-    const time = 2000;
     const copy = clipboardCopy;
-    copy(`http://localhost:3000${url}`);
+    copy(href);
     setCopied('Link copied!');
     setTimeout(() => {
       setCopied('');
-    }, time);
+    }, TIMER);
   };
 
   const addFavorite = () => {
@@ -88,8 +82,6 @@ const DrinkRecipeDetails = () => {
     }
     if (sameId) {
       setHeartColor(true);
-      // console.log(localFavorite, id);
-      // console.log(sameId);
     }
   };
 
@@ -143,7 +135,7 @@ const DrinkRecipeDetails = () => {
           <h5>Ingredients</h5>
           <div>
             {
-              drinkArra.map((item) => (
+              drinkArray.map((item) => (
                 <section key={ item } className="foodRecipeDetailsIngredients">
                   <div className="foodIngredientsContainer">
                     {

@@ -8,13 +8,13 @@ import searchIcon from '../images/searchIcon.svg';
 import '../css/header.css';
 import { saveSearch } from '../actions';
 import {
-  fetchAllMeal,
+  getAllMeals,
   getMealsByIngredient,
   getMealByName,
   getMealsByFirstLetter,
 } from '../services/theMealsDbAPI';
 import {
-  fetchAllCocktail,
+  getAllDrinks,
   getDrinksByIngredient,
   getDrinkByName,
   getDrinksByFirstLetter,
@@ -23,24 +23,30 @@ import {
 const Header = ({ title, search }) => {
   const [searchBar, setSearchBar] = useState(false);
   const [query, setQuery] = useState(null);
-  const [searchType, setSearchType] = useState();
+  const [searchType, setSearchType] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleSearch = () => {
-    const api = {
-      Meal: {
-        ingredient: () => getMealsByIngredient(query),
-        name: () => getMealByName(query),
-        firstLetter: () => getMealsByFirstLetter(query),
-      },
-      Drink: {
-        ingredient: () => getDrinksByIngredient(query),
-        name: () => getDrinkByName(query),
-        firstLetter: () => getDrinksByFirstLetter(query),
-      },
-    };
+  const api = {
+    Meal: {
+      ingredient: () => getMealsByIngredient(query),
+      name: () => getMealByName(query),
+      firstLetter: () => getMealsByFirstLetter(query),
+      getAll: () => getAllMeals(),
+      string: 'Foods',
+      url: 'foods',
+    },
+    Drink: {
+      ingredient: () => getDrinksByIngredient(query),
+      name: () => getDrinkByName(query),
+      firstLetter: () => getDrinksByFirstLetter(query),
+      getAll: () => getAllDrinks(),
+      string: 'Drinks',
+      url: 'drinks',
+    },
+  };
 
+  const handleSearch = () => {
     if (searchType === 'firstLetter' && query.length > 1) {
       global.alert('Your search must have only 1 (one) character');
     } else {
@@ -51,9 +57,7 @@ const Header = ({ title, search }) => {
             return global
               .alert('Sorry, we haven\'t found any recipes for these filters.');
           case result.length === 1:
-            return navigate(`/${title === 'Meal'
-              ? `foods/${result[0].idMeal}`
-              : `drinks/${result[0].idDrink}`}`);
+            return navigate(`/${api[title].url}/${result[0][`id${title}`]}`);
           case result.length > 1:
             return dispatch(saveSearch(result.map((item) => ({
               name: item[`str${title}`],
@@ -67,20 +71,18 @@ const Header = ({ title, search }) => {
     }
   };
 
-  useEffect(() => {
-    if (title === 'Meal') {
-      fetchAllMeal().then((result) => dispatch(saveSearch(result.map((food) => ({
-        image: food.strMealThumb,
-        id: food.idMeal,
-        name: food.strMeal,
-      })))));
-    } else {
-      fetchAllCocktail().then((result) => dispatch(saveSearch(result.map((drink) => ({
-        image: drink.strDrinkThumb,
-        id: drink.idDrink,
-        name: drink.strDrink,
+  const getItems = () => {
+    if (title === 'Meal' || title === 'Drink') {
+      api[title].getAll().then((result) => dispatch(saveSearch(result.map((item) => ({
+        image: item[`str${title}Thumb`],
+        id: item[`id${title}`],
+        name: item[`str${title}`],
       })))));
     }
+  };
+
+  useEffect(() => {
+    getItems();
   }, []);
 
   return (
@@ -94,7 +96,7 @@ const Header = ({ title, search }) => {
           />
         </Link>
         <h1 data-testid="page-title">
-          {title}
+          {api[title]?.string ? api[title].string : title}
         </h1>
         {search && (
           <button

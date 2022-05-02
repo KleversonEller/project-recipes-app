@@ -8,9 +8,9 @@ import '../css/drinks.css';
 const Drinks = () => (
   <div className="drinksContainer">
     <div>
-      <Header title="Drink" search="true" />
+      <Header title="Drink" search />
     </div>
-    <Cards page="drinks" />
+    <Cards page="Drink" />
     <Footer />
   </div>
 );
