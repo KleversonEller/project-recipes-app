@@ -46,47 +46,51 @@ const Cards = ({ page }) => {
   }, []);
 
   return (
-    <div className="cardContainer">
+    <div>
       {!list ? <p> Loading ... </p>
         : (
-          <div className="card-container-filter">
-            <button
-              type="button"
-              name="all"
-              onClick={ ({ target: { name } }) => (changeCategory(name)) }
-              data-testid="All-category-filter"
-            >
-              All
-            </button>
-            {categories.map((category) => (
+          <div className="cardContainer">
+            <div className="card-container-filter">
               <button
-                key={ uuidv4() }
                 type="button"
-                name={ category }
+                name="all"
                 onClick={ ({ target: { name } }) => (changeCategory(name)) }
-                data-testid={ `${category}-category-filter` }
+                data-testid="All-category-filter"
               >
                 All
               </button>
-            ))}
-            {list.map((item, index) => (
-              <div key={ uuidv4() } className="card-container-cards">
-                <Link
-                  to={ `/${api[page]}/${item.id}` }
-                  data-testid={ `${index}-recipe-card` }
+              {categories.map((category) => (
+                <button
+                  key={ uuidv4() }
+                  type="button"
+                  name={ category }
+                  onClick={ ({ target: { name } }) => (changeCategory(name)) }
+                  data-testid={ `${category}-category-filter` }
                 >
-                  <img
-                    data-testid={ `${index}-card-img` }
-                    src={ item.image }
-                    width="150px"
-                    alt={ `Ilustração de ${item.name}` }
-                  />
-                  <span data-testid={ `${index}-card-name` }>
-                    {item.name}
-                  </span>
-                </Link>
-              </div>
-            ))}
+                  {category}
+                </button>
+              ))}
+            </div>
+            <div className="card-container-cards">
+              {list.map((item, index) => (
+                <div key={ uuidv4() } className="cards">
+                  <Link
+                    to={ `/${api[page]}/${item.id}` }
+                    data-testid={ `${index}-recipe-card` }
+                  >
+                    <img
+                      data-testid={ `${index}-card-img` }
+                      src={ item.image }
+                      width="150px"
+                      alt={ `Ilustração de ${item.name}` }
+                    />
+                    <span data-testid={ `${index}-card-name` }>
+                      {item.name}
+                    </span>
+                  </Link>
+                </div>
+              ))}
+            </div>
           </div>)}
     </div>
   );

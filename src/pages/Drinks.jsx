@@ -11,7 +11,7 @@ const Drinks = () => (
       <Header title="Drink" search />
     </div>
     <div className="foodsCardsContainer">
-      <Cards page="drinks" />
+      <Cards page="Drink" />
     </div>
     <div className="foodsFooterContainer">
       <Footer />

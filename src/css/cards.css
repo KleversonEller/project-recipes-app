@@ -7,21 +7,28 @@
 }
 
 .card-container-filter {
+  border: solid 5px white;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
   left: 25px;
   margin: auto;
+  margin-top: 10px;
   padding-bottom: 5px;
   padding-top: 20px;
-  width: 300px;
+  width: 350px;
 }
 
 .card-container-filter button {
+  align-items: center;
   border-radius: 5px;
-  font-size: 16px;
+  display: flex;
+  font-size: 14px;
   font-weight: 700;
+  height: 40px;
+  justify-content: center;
   margin-bottom: 10px;
+  width: 110px;
 }
 
 .card-container-cards {
