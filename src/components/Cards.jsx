@@ -60,6 +60,7 @@ const Cards = ({ page }) => {
             </button>
             {categories.map((category) => (
               <button
+                key={ uuidv4() }
                 type="button"
                 name={ category }
                 onClick={ ({ target: { name } }) => (changeCategory(name)) }
