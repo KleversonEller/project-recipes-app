@@ -69,7 +69,7 @@ const Cards = ({ page }) => {
               </button>
             ))}
             {list.map((item, index) => (
-              <div key={ uuidv4() className="card-container-cards" }>
+              <div key={ uuidv4() } className="card-container-cards">
                 <Link
                   to={ `/${api[page]}/${item.id}` }
                   data-testid={ `${index}-recipe-card` }
