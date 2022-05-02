@@ -3,16 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import '../css/explore.css';
+import { getSurpriseDrink } from '../services/theCockTailDbAPI';
 
 const ExploreDrinks = () => {
   const navigate = useNavigate();
-
-  const getRandomDrinkId = async () => {
-    const URL = 'https://www.thecocktaildb.com/api/json/v1/1/random.php';
-    const data = await (await fetch(URL)).json();
-    const { idDrink } = data.drinks[0];
-    navigate(`/drinks/${idDrink}`);
-  };
 
   return (
     <div>
@@ -28,7 +22,8 @@ const ExploreDrinks = () => {
         <button
           type="button"
           data-testid="explore-surprise"
-          onClick={ getRandomDrinkId }
+          onClick={ () => getSurpriseDrink()
+            .then(({ idDrink }) => navigate(`/drinks/${idDrink}`)) }
         >
           Surprise me!
         </button>

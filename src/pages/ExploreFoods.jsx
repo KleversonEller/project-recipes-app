@@ -3,16 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import '../css/explore.css';
+import { getSurpriseMeal } from '../services/theMealsDbAPI';
 
 const ExploreFoods = () => {
   const navigate = useNavigate();
-
-  const getRandomFoodId = async () => {
-    const URL = 'https://www.themealdb.com/api/json/v1/1/random.php';
-    const data = await (await fetch(URL)).json();
-    const { idMeal } = data.meals[0];
-    navigate(`/foods/${idMeal}`);
-  };
 
   return (
     <div>
@@ -35,7 +29,8 @@ const ExploreFoods = () => {
         <button
           type="button"
           data-testid="explore-surprise"
-          onClick={ getRandomFoodId }
+          onClick={ () => getSurpriseMeal()
+            .then(({ idMeal }) => navigate(`/foods/${idMeal}`)) }
         >
           Surprise me!
         </button>

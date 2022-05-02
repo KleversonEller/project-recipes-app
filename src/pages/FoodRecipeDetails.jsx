@@ -7,51 +7,45 @@ import shareIcon from '../images/shareIcon.svg';
 import heart from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import ButtonRecipe from '../components/ButtonRecipe';
+import { getMealRecipeById } from '../services/theMealsDbAPI';
+import { getAllDrinks } from '../services/theCockTailDbAPI';
 
 const FoodRecipeDetails = () => {
-  const params = useParams();
-  const { id } = params;
-  const nine = 9;
-  const Tnine = 29;
-  const Feight = 48;
+  const { id } = useParams();
+  const SIX = 6;
+  const NINE = 9;
+  const TWENTY_NINE = 29;
+  const FORTY_EIGHT = 48;
   const [food, setFood] = useState();
-  const [foodArra, setFoodArray] = useState([]);
+  const [foodArray, setFoodArray] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [measure, setMeasure] = useState([]);
   const [drink, setDrink] = useState([]);
   const [youtube, setYoutube] = useState();
   const [copied, setCopied] = useState();
   const [heartColor, setHeartColor] = useState(false);
-  const url = `/foods/${id}`;
+  const { href } = window.location;
 
   const getInfo = async () => {
-    const URL = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
-    const response = await fetch(URL);
-    const data = await response.json();
-    setFood(data.meals[0]);
-    setFoodArray([data.meals[0]]);
-    setIngredients(Object.keys(data.meals[0]).slice(nine, Tnine));
-    setMeasure(Object.keys(data.meals[0]).slice(Tnine, Feight));
-    setYoutube((data.meals[0].strYoutube).replace('watch?v=', 'embed/'));
+    getMealRecipeById(id).then((data) => {
+      setFood(data);
+      setFoodArray([data]);
+      setIngredients(Object.keys(data).slice(NINE, TWENTY_NINE));
+      setMeasure(Object.keys(data).slice(TWENTY_NINE, FORTY_EIGHT));
+      setYoutube((data.strYoutube).replace('watch?v=', 'embed/'));
+    });
   };
-  // console.log(food);
 
   const getRecommendedDrink = async () => {
-    // const max = 19; // utilizar indicação aleatória no futuro
-    const six = 6;
-    // const i = Math.floor((Math.random() * max)); // gerar numero aleatório
-    const URL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
-    const response = await fetch(URL);
-    const data = await response.json();
-    const drinks = ((data.drinks).slice(0, six));
-    // console.log(drinks);
-    setDrink(drinks);
+    getAllDrinks().then((data) => {
+      setDrink(data.slice(0, SIX));
+    });
   };
 
   const copyRecipe = () => {
     const time = 2000;
     const copy = clipboardCopy;
-    copy(`http://localhost:3000${url}`);
+    copy(href);
     setCopied('Link copied!');
     setTimeout(() => {
       setCopied('');
@@ -141,7 +135,7 @@ const FoodRecipeDetails = () => {
           <h5>Ingredients</h5>
           <div>
             {
-              foodArra.map((item) => (
+              foodArray.map((item) => (
                 <section key={ item } className="foodRecipeDetailsIngredients">
                   <div className="foodIngredientsContainer">
                     {

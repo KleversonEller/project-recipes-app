@@ -17,8 +17,8 @@ const Login = () => {
   };
 
   const checkInfo = () => {
-    const six = 6;
-    if ((password.length > six) && (/\S+@\S+\.\S+/.test(email))) {
+    const SIX = 6;
+    if ((password.length > SIX) && (/\S+@\S+\.\S+/.test(email))) {
       setIsDisabled(false);
       dispatch(saveEmail(email));
       localStorage.setItem('user', JSON.stringify({ email }));

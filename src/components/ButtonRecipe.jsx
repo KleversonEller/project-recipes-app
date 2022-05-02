@@ -4,10 +4,8 @@ import PropTypes from 'prop-types';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../css/button.css';
 
-const ButtonRecipe = (props) => {
-  const params = useParams();
-  const { id } = params;
-  const { type } = props;
+const ButtonRecipe = ({ type }) => {
+  const { id } = useParams();
   const [namebtn, setNameBtn] = useState('Start Recipe');
   const [stateButton, setStateButton] = useState(true);
   const navigate = useNavigate();
@@ -24,7 +22,6 @@ const ButtonRecipe = (props) => {
       localStorage.setItem('inProgressRecipes', JSON.stringify({ meals }));
       navigate(`/foods/${id}/in-progress`);
     }
-    // console.log(id, type);
   };
 
   const verifyInProgressRecipe = () => {
@@ -32,17 +29,12 @@ const ButtonRecipe = (props) => {
 
     if (localInProgressRecipe) {
       if (localInProgressRecipe.cocktails) {
-        // console.log('ooo', Object.keys(localInProgressRecipe.cocktails));
         const IDlocalInProgressRecipe = Object.keys(localInProgressRecipe.cocktails);
-        // console.log(IDlocalInProgressRecipe, id);
         if (IDlocalInProgressRecipe[0] === id) {
           setNameBtn('Continue Recipe');
         }
       } else if (localInProgressRecipe.meals) {
-        // console.log('ooo', Object.keys(localInProgressRecipe.meals));
-        // console.log(localInProgressRecipe.meals);
         const IDlocalInProgressRecipe = Object.keys(localInProgressRecipe.meals);
-        // console.log(IDlocalInProgressRecipe, id);
         if (IDlocalInProgressRecipe[0] === id) {
           setNameBtn('Continue Recipe');
         }
@@ -52,12 +44,9 @@ const ButtonRecipe = (props) => {
 
   const verifyDoneRecipes = () => {
     const localDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
-    if (localDoneRecipes) {
-      console.log(localDoneRecipes);
-      if (localDoneRecipes[0].id === id) {
-        console.log('receita finalizada');
-        setStateButton(false);
-      }
+    if (localDoneRecipes && localDoneRecipes[0].id === id) {
+      console.log('receita finalizada');
+      setStateButton(false);
     }
   };
 

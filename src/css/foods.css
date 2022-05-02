@@ -2,10 +2,12 @@
   align-items: center;
   display: flex;
   flex-direction: column;
-  height: 576px;
-  justify-content: space-between;
+  height: 502px;
+  justify-content: center;
+  left: 0;
   margin: auto;
-  padding-top: 20px;
+  position: fixed;
+  top: 60px;
   width: 360px;
 }
 
