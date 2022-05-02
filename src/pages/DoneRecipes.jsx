@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import DoneAndFavoriteCard from '../components/DoneAndFavoriteCard';
-// import Header from '../components/Header';
+import Header from '../components/Header';
+import '../css/done.css';
 
 function DoneRecipes() {
   const [recipesFromStorage, setRecipesFromStorage] = useState([]);
@@ -18,8 +19,7 @@ function DoneRecipes() {
     getRecipesFromStorage();
   }, []);
 
-  const handleClick = ({ target }) => {
-    const { value } = target;
+  const handleClick = ({ target: { value } }) => {
     if (value === 'all') {
       filterRecipes(recipesFromStorage);
     } else {
@@ -31,7 +31,7 @@ function DoneRecipes() {
 
   return (
     <div className="doneRecipesContainer">
-      {/* <Header headerTitle="Done Recipes" isSearchVisible={ false } /> */}
+      <Header title="Done Recipes" search={ false } />
       <button
         type="button"
         data-testid="filter-by-all-btn"

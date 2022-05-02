@@ -1,19 +1,21 @@
 // const { drinks } = await (await fetch(`${baseURL}`)).json();
 const baseURL = 'https://www.thecocktaildb.com/api/json/v1/1';
+const DOZE = 12;
+const CINCO = 5;
 
 export const getDrinksByIngredient = async (ingredient) => {
   const { drinks } = await (await fetch(`${baseURL}/filter.php?i=${ingredient}`)).json();
-  return drinks;
+  return drinks.slice(0, DOZE);
 };
 
 export const getDrinkByName = async (drink) => {
   const { drinks } = await (await fetch(`${baseURL}/search.php?s=${drink}`)).json();
-  return drinks[0];
+  return drinks === null ? drinks : drinks.slice(0, DOZE);
 };
 
 export const getDrinksByFirstLetter = async (letter) => {
   const { drinks } = await (await fetch(`${baseURL}/search.php?f=${letter}`)).json();
-  console.log(drinks);
+  return drinks.slice(0, DOZE);
 };
 
 export const getDrinkRecipeById = async (id) => {
@@ -21,10 +23,9 @@ export const getDrinkRecipeById = async (id) => {
   return drinks[0];
 };
 
-export const fetchAllCocktail = async () => {
-  const limiterArray = 12;
+export const getAllDrinks = async () => {
   const { drinks } = await (await fetch(`${baseURL}/search.php?s=`)).json();
-  return drinks.slice(0, limiterArray);
+  return drinks.slice(0, DOZE);
 };
 
 export const getSurpriseDrink = async () => {
@@ -32,16 +33,14 @@ export const getSurpriseDrink = async () => {
   return drinks[0];
 };
 
-export const fetchCocktailByCategory = async (category) => {
-  const limiterArray = 12;
+export const getDrinksByCategory = async (category) => {
   const { drinks } = await (await fetch(`${baseURL}/filter.php?c=${category}`)).json();
-  return drinks.slice(0, limiterArray);
+  return drinks.slice(0, DOZE);
 };
 
-export const fetchCategoryCocktail = async () => {
-  const limiterArray = 5;
+export const getDrinkCategories = async () => {
   const { drinks } = await (await fetch(`${baseURL}/list.php?c=list`)).json();
-  return drinks.slice(0, limiterArray);
+  return drinks.slice(0, CINCO);
 };
 
 export const getAllDrinkIngredients = async () => {

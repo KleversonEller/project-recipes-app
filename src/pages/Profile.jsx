@@ -8,8 +8,8 @@ import Header from '../components/Header';
 import '../css/profile.css';
 
 const Profile = () => {
-  const { userEmail } = useSelector((state) => state?.user); // ESTADO GLOBAL DO REDUX
-  const email = JSON.parse(localStorage.getItem('user')); // localStorage
+  const { userEmail } = useSelector((state) => state?.user);
+  const email = JSON.parse(localStorage.getItem('user'));
   const [user, setUser] = useState('');
   const navigate = useNavigate();
 

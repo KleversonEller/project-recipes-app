@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
 import PropTypes, { array, oneOfType, string } from 'prop-types';
 import { Link } from 'react-router-dom';
+import clipboardCopy from 'clipboard-copy';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import '../css/favoriteRecipes.css';
+// import '../css/favorites-done-cards.css';
 
 function DoneAndFavoriteCard({ index, setRecipesFromStorage,
-  isFavoriteRecipes, recipe }) {
-  const { name, id, image, type, tags, alcoholicOrNot,
-    nationality, category, doneDate } = recipe;
+  isFavoriteRecipes, recipe: { name, id, image, type, tags, alcoholicOrNot,
+    nationality, category, doneDate } }) {
   const [isCopied, setIsCopied] = useState(false);
   const TIMER = 2000;
+  const { origin } = window.location;
+  const copy = clipboardCopy;
 
   const setLocalStorage = (key, info) => {
     localStorage.setItem(key, JSON.stringify(info));
@@ -19,8 +22,7 @@ function DoneAndFavoriteCard({ index, setRecipesFromStorage,
   const getLocalStorage = (key) => JSON.parse(localStorage.getItem(key));
 
   const copyLink = () => {
-    const path = `http://localhost:3000/${type === 'drink' ? 'drinks' : 'foods'}/${id}`;
-    navigator.clipboard.writeText(path);
+    copy(`${origin}/${type}s/${id}`);
     setIsCopied(true);
     setTimeout(() => {
       setIsCopied(false);

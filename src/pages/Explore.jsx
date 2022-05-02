@@ -7,23 +7,21 @@ import '../css/explore.css';
 
 const Explore = () => {
   const navigate = useNavigate();
-  const handleClick = (location) => {
-    navigate(location);
-  };
+
   return (
     <div className="exploreContainer">
       <Header title="Explore" />
       <div className="exploreNavButtonsContainer">
         <button
           data-testid="explore-foods"
-          onClick={ () => handleClick('/explore/foods') }
+          onClick={ () => navigate('/explore/foods') }
           type="button"
         >
           Explore Foods
         </button>
         <button
           data-testid="explore-drinks"
-          onClick={ () => handleClick('/explore/drinks') }
+          onClick={ () => navigate('/explore/drinks') }
           type="button"
         >
           Explore Drinks

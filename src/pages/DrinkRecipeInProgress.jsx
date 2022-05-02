@@ -2,13 +2,8 @@ import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 const DrinkRecipeInProgress = () => {
-  const params = useParams();
-  const { id } = params;
+  const { id } = useParams();
   const navigate = useNavigate();
-
-  const returnDrink = () => {
-    navigate(`/drinks/${id}`);
-  };
 
   const doneRecipes = () => {
     localStorage.setItem('doneRecipes', JSON.stringify([{
@@ -20,7 +15,7 @@ const DrinkRecipeInProgress = () => {
   return (
     <div>
       <p>DrinkRecipeInProgress</p>
-      <button type="button" onClick={ returnDrink }>Voltar</button>
+      <button type="button" onClick={ () => navigate(`/drinks/${id}`) }>Voltar</button>
       <button type="button" onClick={ doneRecipes }>Finalizar receita</button>
     </div>
   );

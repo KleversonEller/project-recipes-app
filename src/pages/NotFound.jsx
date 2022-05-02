@@ -3,7 +3,7 @@ import rockGlass from '../images/rockGlass.svg';
 
 const NotFound = () => (
   <div>
-    <span className="logo">TRYBE</span>
+    <span className="logo">Not Found</span>
     <object
       className="rocksGlass"
       type="image/svg+xml"

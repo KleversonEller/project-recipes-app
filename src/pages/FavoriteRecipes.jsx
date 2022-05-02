@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import DoneAndFavoriteCard from '../components/DoneAndFavoriteCard';
 import '../css/favoriteRecipes.css';
+// import '../css/favorites.css';
 
 function FavoriteRecipes() {
   const [recipesFromStorage, setRecipesFromStorage] = useState([]);

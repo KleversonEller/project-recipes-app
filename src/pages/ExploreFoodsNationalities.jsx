@@ -4,7 +4,7 @@ import Header from '../components/Header';
 
 const ExploreFoodsNationalities = () => (
   <div>
-    <Header title="Explore Nationalities" search="true" />
+    <Header title="Explore Nationalities" search />
     <Footer />
   </div>
 );
