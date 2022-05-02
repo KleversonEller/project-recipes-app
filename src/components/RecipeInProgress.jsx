@@ -84,12 +84,14 @@ const RecipeInProgress = ({ id, page }) => {
           </span>
           <ul>
             {recipe.ingredients.map((ingredient, index) => ingredient && (
-              <li key={ ingredient }>
+              <li
+                data-testid={ `${index}-ingredient-step` }
+                key={ ingredient }
+              >
                 <label htmlFor={ ingredient }>
                   <input
                     id={ ingredient }
                     type="checkbox"
-                    data-testid={ `${index}-ingredient-step` }
                     value={ ingredient }
                   />
                   {ingredient}
