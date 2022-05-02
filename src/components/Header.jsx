@@ -114,6 +114,7 @@ const Header = ({ title, search }) => {
         {searchBar && (
           <div className="searchBarContainer">
             <input
+              className="inputSearchBar"
               type="text"
               data-testid="search-input"
               placeholder="Type your search"

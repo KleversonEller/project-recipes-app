@@ -14,14 +14,30 @@
   width: 360px;
 }
 
-/*
-.headerContainer button {
+.searchBarContainer {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 140px;
+  width: 350px;
 }
-*/
 
-
-.searchBarContainer input {
+.inputSearchBar {
   border-radius: 10px;
-  margin-top: 50px;
   padding: 8px;
+  width: 350px;
 }
+
+.searchBarRadioButtons {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  width: 340px;
+}
+
+.searchBarContainer button {
+  font-weight: 700;
+  width: 340px;
+}
+
