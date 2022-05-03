@@ -11,6 +11,11 @@
   width: 360px;
 }
 
+.homeLink {
+  margin-top: 10px;
+  width: 32px;
+}
+
 .foodContainerDetails {
   margin-bottom: 50px;
 }
@@ -71,6 +76,7 @@
 .foodRecipeDetailsImage {
   border: solid 5px white;
   border-radius: 20px;
+  box-shadow: 2px 2px 8px 2px black;
   display: flex;
   margin: auto;
   margin-top: 20px;
