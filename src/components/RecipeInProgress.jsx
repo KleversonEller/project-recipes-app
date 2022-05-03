@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import PropTypes from 'prop-types';
-import shareIcon from '../images/shareIcon.svg';
-import favoritIcon from '../images/blackHeartIcon.svg';
+import Favorite from './Favorite';
 
-const RecipeInProgress = ({ id, recipe, page, local }) => {
+const RecipeInProgress = ({ id, recipe, page, local, data }) => {
   const [done, setDone] = useState([]);
   const [saveLocal, setSaveLocal] = useState({ cocktails: {}, meals: {} });
   const navigate = useNavigate();
@@ -20,10 +19,10 @@ const RecipeInProgress = ({ id, recipe, page, local }) => {
   useEffect(() => {
     const handleLocal = () => {
       switch (page) {
-      case 'foods':
+      case 'food':
         setSaveLocal({ ...saveLocal, meals: { ...saveLocal.meals, [id]: done } });
         break;
-      case 'drinks':
+      case 'drink':
         setSaveLocal({ ...saveLocal, cocktails: { ...saveLocal.cocktails, [id]: done } });
         break;
       default:
@@ -60,24 +59,7 @@ const RecipeInProgress = ({ id, recipe, page, local }) => {
           <span data-testid="recipe-title">
             {recipe.name}
           </span>
-          <button
-            type="button"
-          >
-            <img
-              data-testid="share-btn"
-              src={ shareIcon }
-              alt="Icone de compartilhante"
-            />
-          </button>
-          <button
-            type="button"
-          >
-            <img
-              data-testid="favorite-btn"
-              src={ favoritIcon }
-              alt="Icone de favorita"
-            />
-          </button>
+          <Favorite food={ data } type={ page } />
           <span data-testid="recipe-category">
             {recipe.category}
           </span>
