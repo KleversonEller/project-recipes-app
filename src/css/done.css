@@ -1,0 +1,9 @@
+.doneRecipesContainer {
+  align-items: center;
+  height: 580px;
+  margin: auto;
+  overflow: auto;
+  position: fixed;
+  top: 60px;
+  width: 360px;
+}

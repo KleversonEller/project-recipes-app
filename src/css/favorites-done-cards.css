@@ -1,0 +1,11 @@
+.done-fav-cards-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 540px;
+  margin: auto;
+  overflow: auto;
+  position: fixed;
+  top: 100px;
+  width: 360px;
+}

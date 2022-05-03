@@ -8,10 +8,14 @@ import '../css/drinks.css';
 const Drinks = () => (
   <div className="drinksContainer">
     <div>
-      <Header title="Drinks" search="true" />
+      <Header title="Drink" search />
     </div>
-    <Cards page="drinks" />
-    <Footer />
+    <div className="foodsCardsContainer">
+      <Cards page="Drink" />
+    </div>
+    <div className="foodsFooterContainer">
+      <Footer />
+    </div>
   </div>
 );
 

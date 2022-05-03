@@ -1,131 +1,98 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
-import { fetchAllMeal,
-  fetchCategoryMeal,
-  fetchMealsByCategory,
-} from '../services/theMealsDbAPI';
-import { fetchAllCocktail,
-  fetchCategoryCocktail,
-  fetchCocktailByCategory,
-} from '../services/theCockTailDbAPI';
-import './Cards.css';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  getMealCategories,
+  getAllMeals,
+  getMealsByCategory } from '../services/theMealsDbAPI';
+import {
+  getDrinkCategories,
+  getAllDrinks,
+  getDrinksByCategory } from '../services/theCockTailDbAPI';
+import { saveSearch } from '../actions';
+import '../css/cards.css';
 
 const Cards = ({ page }) => {
-  const [list, setList] = useState([]);
-  const [categorys, setCategorys] = useState([]);
-  const [fetchAll, setFetchAll] = useState(true);
-  const [filterSelected, setFilterSelected] = useState('');
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const getList = async () => {
-      const getApiFoods = await fetchAllMeal();
-      const getFoodsCategory = await fetchCategoryMeal();
-      const getApiDrinks = await fetchAllCocktail();
-      const getDrinksCategory = await fetchCategoryCocktail();
-      switch (page) {
-      case 'foods':
-        setList(getApiFoods.map((food) => ({
-          image: food.strMealThumb,
-          name: food.strMeal,
-          id: food.idMeal,
-        })));
-        setCategorys(getFoodsCategory.map((category) => category.strCategory));
-        break;
-      case 'drinks':
-        setList(getApiDrinks.map((drink) => ({
-          image: drink.strDrinkThumb,
-          name: drink.strDrink,
-          id: drink.idDrink,
-        })));
-        setCategorys(getDrinksCategory.map((category) => category.strCategory));
-        break;
-      default:
-        return navigate('/notfound');
-      }
-    };
-    if (fetchAll) { getList(); }
-  }, [fetchAll]);
-
-  const changeFilter = async ({ target }) => {
-    const { name } = target;
-
-    switch (name) {
-    case 'all':
-      setFetchAll(true); setFilterSelected('');
-      break;
-    case filterSelected:
-      setFetchAll(true); setFilterSelected('');
-      break;
-    default:
-      setFetchAll(false); setFilterSelected(name);
-      break;
-    }
-
-    if (page === 'foods' && name !== 'all') {
-      const getList = await fetchMealsByCategory(name);
-      setList(getList.map((food) => ({
-        image: food.strMealThumb,
-        id: food.idMeal,
-        name: food.strMeal,
-      })));
-    }
-    if (page === 'drinks' && name !== 'all') {
-      const getList = await fetchCocktailByCategory(name);
-      setList(getList.map((drink) => ({
-        image: drink.strDrinkThumb,
-        id: drink.idDrink,
-        name: drink.strDrink,
-      })));
-    }
+  const { list } = useSelector((state) => state?.query);
+  const [categories, setCategories] = useState([]);
+  const [sel, setSel] = useState('all');
+  const dispatch = useDispatch();
+  const api = {
+    AllMeals: () => getAllMeals(),
+    MealCategories: () => getMealCategories(),
+    MealsByCategory: (c) => getMealsByCategory(c),
+    AllDrinks: () => getAllDrinks(),
+    DrinkCategories: () => getDrinkCategories(),
+    DrinksByCategory: (c) => getDrinksByCategory(c),
+    Drink: 'drinks',
+    Meal: 'foods',
   };
 
+  const changeCategory = (name) => {
+    api[name !== sel ? `${page}sByCategory` : `All${page}s`](name !== sel ? name : '')
+      .then((result) => dispatch(saveSearch(result.map((item) => ({
+        name: item[`str${page}`],
+        id: item[`id${page}`],
+        image: item[`str${page}Thumb`],
+      })))));
+    setSel(name !== sel ? name : 'all');
+  };
+
+  useEffect(() => {
+    api[`${page}Categories`]().then((result) => setCategories(
+      result.map((i) => i.strCategory),
+    ));
+  }, []);
+
   return (
-    <div className="card-container">
-      {categorys.length === 0 ? <p> Loading ... </p>
+    <div>
+      {!list ? <p> Loading ... </p>
         : (
-          <div>
-            <button
-              type="button"
-              name="all"
-              onClick={ changeFilter }
-              data-testid="All-category-filter"
-            >
-              All
-            </button>
-            {categorys.map((category) => (
+          <div className="cardContainer">
+            <div className="card-container-filter">
               <button
-                key={ uuidv4() }
                 type="button"
-                name={ category }
-                onClick={ changeFilter }
-                data-testid={ `${category}-category-filter` }
+                name={ sel }
+                onClick={ ({ target: { name } }) => (changeCategory(name)) }
+                data-testid="All-category-filter"
               >
-                { category }
+                All
               </button>
-            ))}
-            {list.map((food, index) => (
-              <div key={ uuidv4() }>
-                <Link
-                  to={ `/${page}/${food.id}` }
-                  data-testid={ `${index}-recipe-card` }
+              {categories.map((category) => (
+                <button
+                  key={ uuidv4() }
+                  type="button"
+                  name={ category }
+                  onClick={ ({ target: { name } }) => (changeCategory(name)) }
+                  data-testid={ `${category}-category-filter` }
                 >
-                  <img
-                    data-testid={ `${index}-card-img` }
-                    src={ food.image }
-                    width="150px"
-                    alt={ `Ilustração de ${food.name}` }
-                  />
-                  <span data-testid={ `${index}-card-name` }>
-                    {food.name}
-                  </span>
-                </Link>
-              </div>
-            ))}
+                  {category}
+                </button>
+              ))}
+            </div>
+            <div className="card-container-cards">
+              {list.map((item, index) => (
+                <div key={ uuidv4() } className="cards">
+                  <Link
+                    to={ `/${api[page]}/${item.id}` }
+                    data-testid={ `${index}-recipe-card` }
+                  >
+                    <img
+                      data-testid={ `${index}-card-img` }
+                      src={ item.image }
+                      width="150px"
+                      alt={ `Ilustração de ${item.name}` }
+                    />
+                    <span data-testid={ `${index}-card-name` }>
+                      {item.name}
+                    </span>
+                  </Link>
+                </div>
+              ))}
+            </div>
           </div>)}
     </div>
   );

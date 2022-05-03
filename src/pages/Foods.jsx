@@ -7,10 +7,14 @@ import '../css/foods.css';
 const Foods = () => (
   <div className="foodsContainer">
     <div>
-      <Header title="Foods" search="true" />
+      <Header title="Meal" search />
     </div>
-    <Cards page="foods" />
-    <Footer />
+    <div className="foodsCardsContainer">
+      <Cards page="Meal" />
+    </div>
+    <div className="foodsFooterContainer">
+      <Footer />
+    </div>
   </div>
 );
 
