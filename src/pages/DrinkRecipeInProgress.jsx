@@ -7,11 +7,13 @@ const DrinkRecipeInProgress = () => {
   const params = useParams();
   const { id } = params;
   const [recipe, setRecipe] = useState();
+  const [data, setData] = useState();
   const [local, setLocal] = useState({ cocktails: {}, meals: {} });
 
   useEffect(() => {
     const getRecipe = async () => {
       const fetchRecipe = await getDrinkRecipeById(id);
+      setData(fetchRecipe);
       const ingredientes = Object
         .keys(fetchRecipe).filter((key) => key.includes('strIngredient'));
       setRecipe({
@@ -35,7 +37,13 @@ const DrinkRecipeInProgress = () => {
   }, []);
 
   return (
-    <RecipeInProgress id={ params.id } page="drinks" recipe={ recipe } local={ local } />
+    <RecipeInProgress
+      id={ params.id }
+      page="drink"
+      recipe={ recipe }
+      local={ local }
+      data={ data }
+    />
   );
 };
 
