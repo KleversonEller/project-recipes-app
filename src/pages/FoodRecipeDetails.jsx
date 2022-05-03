@@ -14,6 +14,7 @@ const FoodRecipeDetails = () => {
   const NINE = 9;
   const TWENTY_NINE = 29;
   const FORTY_EIGHT = 48;
+  const type = 'food';
   const [food, setFood] = useState();
   const [foodArray, setFoodArray] = useState([]);
   const [ingredients, setIngredients] = useState([]);
@@ -61,7 +62,7 @@ const FoodRecipeDetails = () => {
             <h2 className="foodsTitle" data-testid="recipe-title">{food.strMeal}</h2>
             <h4 data-testid="recipe-category">{food.strCategory}</h4>
           </div>
-          <Favorite food={ food } />
+          <Favorite food={ food } type={ type } />
           <h4>Ingredients</h4>
           <div>
             {

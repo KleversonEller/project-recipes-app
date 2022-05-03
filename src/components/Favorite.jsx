@@ -10,9 +10,9 @@ const Favorite = (props) => {
   const { id } = useParams();
   const [copied, setCopied] = useState();
   const [heartColor, setHeartColor] = useState(false);
-  const { food } = props;
+  const { food, type } = props;
   const { href } = window.location;
-  // console.log(food);
+  // console.log(food, type);
   const copyRecipe = () => {
     const time = 2000;
     const copy = clipboardCopy;
@@ -23,25 +23,43 @@ const Favorite = (props) => {
     }, time);
   };
 
-  const addFavorite = () => {
-    setHeartColor(!heartColor);
-    const favoriteFood = {
-      id: food.idMeal,
-      type: 'food',
-      nationality: food.strArea,
-      category: food.strCategory,
-      alcoholicOrNot: '',
-      name: food.strMeal,
-      image: food.strMealThumb,
-    };
+  const saveLocal = (favorite) => {
     const local = JSON.parse(localStorage.getItem(('favoriteRecipes')));
     if (!local || local.lenght === 0 || local === null) {
-      localStorage.setItem('favoriteRecipes', JSON.stringify([favoriteFood]));
+      localStorage.setItem('favoriteRecipes', JSON.stringify([favorite]));
     } else if (!heartColor === true) {
-      localStorage.setItem('favoriteRecipes', JSON.stringify([...local, favoriteFood]));
+      localStorage.setItem('favoriteRecipes', JSON.stringify([...local, favorite]));
     } else {
       const except = local.filter((item) => (item.id !== id));
       localStorage.setItem('favoriteRecipes', JSON.stringify([...except]));
+    }
+  };
+
+  const addFavorite = () => {
+    setHeartColor(!heartColor);
+    let favorite;
+    if (type === 'food') {
+      favorite = {
+        id: food.idMeal,
+        type: 'food',
+        nationality: food.strArea,
+        category: food.strCategory,
+        alcoholicOrNot: '',
+        name: food.strMeal,
+        image: food.strMealThumb,
+      };
+      saveLocal(favorite);
+    } else if (type === 'drink') {
+      favorite = {
+        id: food.idDrink,
+        type: 'drink',
+        nationality: '',
+        category: food.strCategory,
+        alcoholicOrNot: food.strAlcoholic,
+        name: food.strDrink,
+        image: food.strDrinkThumb,
+      };
+      saveLocal(favorite);
     }
   };
 
