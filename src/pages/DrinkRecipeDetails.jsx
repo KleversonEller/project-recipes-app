@@ -9,6 +9,7 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 import ButtonRecipe from '../components/ButtonRecipe';
 import { getDrinkRecipeById } from '../services/theCockTailDbAPI';
 import { getAllMeals } from '../services/theMealsDbAPI';
+import home from '../images/casa.png';
 
 const DrinkRecipeDetails = () => {
   const { id } = useParams();
@@ -93,6 +94,9 @@ const DrinkRecipeDetails = () => {
 
   return (
     <div className="foodRecipeDetailsContainer">
+      <Link to="/drinks">
+        <img src={ home } alt="Link para home" className="homeLink" />
+      </Link>
       { drink && (
         <div className="foodContainerDetails">
           <img

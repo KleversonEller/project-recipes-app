@@ -2,13 +2,11 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import clipboardCopy from 'clipboard-copy';
-import shareIcon from '../images/shareIcon.svg';
-import heart from '../images/whiteHeartIcon.svg';
-import blackHeartIcon from '../images/blackHeartIcon.svg';
 import ButtonRecipe from '../components/ButtonRecipe';
 import { getMealRecipeById } from '../services/theMealsDbAPI';
 import { getAllDrinks } from '../services/theCockTailDbAPI';
+import home from '../images/casa.png';
+import Favorite from '../components/Favorite';
 
 const FoodRecipeDetails = () => {
   const { id } = useParams();
@@ -22,9 +20,6 @@ const FoodRecipeDetails = () => {
   const [measure, setMeasure] = useState([]);
   const [drink, setDrink] = useState([]);
   const [youtube, setYoutube] = useState();
-  const [copied, setCopied] = useState();
-  const [heartColor, setHeartColor] = useState(false);
-  const { href } = window.location;
 
   const getInfo = async () => {
     getMealRecipeById(id).then((data) => {
@@ -42,57 +37,18 @@ const FoodRecipeDetails = () => {
     });
   };
 
-  const copyRecipe = () => {
-    const time = 2000;
-    const copy = clipboardCopy;
-    copy(href);
-    setCopied('Link copied!');
-    setTimeout(() => {
-      setCopied('');
-    }, time);
-  };
-
-  const addFavorite = () => {
-    setHeartColor(!heartColor);
-    const favoriteFood = {
-      id: food.idMeal,
-      type: 'food',
-      nationality: food.strArea,
-      category: food.strCategory,
-      alcoholicOrNot: '',
-      name: food.strMeal,
-      image: food.strMealThumb,
-    };
-    const local = JSON.parse(localStorage.getItem(('favoriteRecipes')));
-    if (!local || local.lenght === 0 || local === null) {
-      localStorage.setItem('favoriteRecipes', JSON.stringify([favoriteFood]));
-    } else if (!heartColor === true) {
-      localStorage.setItem('favoriteRecipes', JSON.stringify([...local, favoriteFood]));
-    } else {
-      const except = local.filter((item) => (item.id !== id));
-      localStorage.setItem('favoriteRecipes', JSON.stringify([...except]));
-    }
-  };
-
-  const verifyFavorite = () => {
-    const local = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    let sameId;
-    if (local) {
-      sameId = local.find((item) => (item.id === id));
-    }
-    if (sameId) {
-      setHeartColor(true);
-    }
-  };
-
   useEffect(() => {
     getInfo();
     getRecommendedDrink();
-    verifyFavorite();
   }, []);
+
+  // console.log(food);
 
   return (
     <div className="foodRecipeDetailsContainer">
+      <Link to="/foods">
+        <img src={ home } alt="Link para home" className="homeLink" />
+      </Link>
       { food && (
         <div className="foodContainerDetails">
           <img
@@ -105,33 +61,7 @@ const FoodRecipeDetails = () => {
             <h2 className="foodsTitle" data-testid="recipe-title">{food.strMeal}</h2>
             <h4 data-testid="recipe-category">{food.strCategory}</h4>
           </div>
-          <div className="iconsContainer">
-            <button
-              type="button"
-              onClick={ copyRecipe }
-            >
-              <img
-                className="foodRecipeDetailsIcon"
-                src={ shareIcon }
-                alt="share-button"
-                data-testid="share-btn"
-              />
-            </button>
-            <button
-              type="button"
-              onClick={ addFavorite }
-            >
-              <img
-                className="foodRecipeDetailsIcon"
-                src={ heartColor ? blackHeartIcon : heart }
-                alt="heart-button"
-                data-testid="favorite-btn"
-              />
-            </button>
-          </div>
-          <div className="linkCopiedContainer">
-            {copied && <p>{ copied }</p> }
-          </div>
+          <Favorite food={ food } />
           <h4>Ingredients</h4>
           <div>
             {

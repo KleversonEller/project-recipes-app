@@ -25,14 +25,15 @@
 body {
   background-color: var(--green);
   color: gold;
+  height: 640px;
+  width: 360px;
 }
 
-/*
+
 button {
-  background-color: gold;
-  border: none;
+  cursor: pointer;
 }
-*/
+
 
 .meals {
   color: #464646;
