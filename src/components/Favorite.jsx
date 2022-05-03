@@ -14,9 +14,11 @@ const Favorite = (props) => {
   const { href } = window.location;
   // console.log(food, type);
   const copyRecipe = () => {
+    const five = 5;
     const time = 2000;
     const copy = clipboardCopy;
-    copy(href);
+    const hrefRecipe = href.split('/').slice(0, five).join('/');
+    copy(hrefRecipe);
     setCopied('Link copied!');
     setTimeout(() => {
       setCopied('');
