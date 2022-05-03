@@ -54,6 +54,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  margin-top: 10px;
 }
 
 .foodsTitle {
@@ -93,6 +94,25 @@
   width: 300px;
 }
 
+.foodRecipeProgressIngredients {
+  border: solid 5px white;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  margin-top: 5px;
+  padding: 10px;
+  width: 340px;
+}
+
+.foodRecipeProgressIngredients li {
+  list-style: none;
+}
+
+.foodRecipeProgressIngredients input {
+  margin-right: 5px;
+}
+
 .foodIngredientsContainer {
   font-size: 14px;
   padding-right: 6px;
@@ -116,6 +136,21 @@
   width: 340px;
 }
 
+.foodRecipeInstructions {
+  border: solid 5px white;
+  border-radius: 10px;
+  font-size: 14px;
+  height: 250px;
+  margin: auto;
+  margin-bottom: 50px;
+  margin-top: 10px;
+  overflow: scroll;
+  padding: 10px;
+  padding-bottom: 50px;
+  text-align: justify;
+  width: 340px;
+}
+
 .videoContainer {
   border: solid 5px white;
   height: 160px;
@@ -132,6 +167,7 @@ h4 {
 }
 
 h2 {
+  color: white;
   text-shadow: 2px 2px 2px black;
 }
 

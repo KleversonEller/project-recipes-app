@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import PropTypes from 'prop-types';
@@ -47,52 +48,60 @@ const RecipeInProgress = ({ id, recipe, page, local, data }) => {
   };
 
   return (
-    <div>
+    <div className="foodContainerDetails">
       {recipe ? (
         <div>
           <img
+            className="foodRecipeDetailsImage"
             data-testid="recipe-photo"
             src={ recipe.image }
             width="150px"
             alt={ `Ilustração de ${recipe.name}` }
           />
-          <span data-testid="recipe-title">
-            {recipe.name}
-          </span>
+          <div className="titleContainer">
+            <h2 data-testid="recipe-title">
+              {recipe.name}
+            </h2>
+            <h4 data-testid="recipe-category">
+              {recipe.category}
+            </h4>
+          </div>
           <Favorite food={ data } type={ page } />
-          <span data-testid="recipe-category">
-            {recipe.category}
-          </span>
-          <ul>
-            {recipe.ingredients.map((ingredient, index) => ingredient && (
-              <li
-                data-testid={ `${index}-ingredient-step` }
-                key={ ingredient }
-              >
-                <label htmlFor={ ingredient }>
-                  <input
-                    id={ ingredient }
-                    onChange={ handleDone }
-                    checked={ done.some((value) => value === ingredient) }
-                    type="checkbox"
-                    value={ ingredient }
-                  />
-                  {ingredient}
-                </label>
-              </li>
-            ))}
-          </ul>
-          <span data-testid="instructions">
-            {recipe.preparation}
-          </span>
+          <div className="foodRecipeProgressIngredients">
+            <ul>
+              {recipe.ingredients.map((ingredient, index) => ingredient && (
+                <li
+                  data-testid={ `${index}-ingredient-step` }
+                  key={ ingredient }
+                >
+                  <label htmlFor={ ingredient }>
+                    <input
+                      id={ ingredient }
+                      onChange={ handleDone }
+                      checked={ done.some((value) => value === ingredient) }
+                      type="checkbox"
+                      value={ ingredient }
+                    />
+                    {ingredient}
+                  </label>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="foodRecipeInstructions">
+            <span data-testid="instructions">
+              {recipe.preparation}
+            </span>
+          </div>
           <button
+            className="btn-start"
             type="button"
             data-testid="finish-recipe-btn"
             disabled={ done.length !== recipe.ingredients
               .filter((value) => value !== undefined && value).length }
             onClick={ () => navigate('/done-recipes') }
           >
-            finalizar
+            Finalizar
           </button>
         </div>
       )
