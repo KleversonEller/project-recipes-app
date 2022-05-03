@@ -1,27 +1,42 @@
-import React from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import RecipeInProgress from '../components/RecipeInProgress';
+import { getMealRecipeById } from '../services/theMealsDbAPI';
 
 const FoodRecipeInProgress = () => {
-  const { id } = useParams();
-  const navigate = useNavigate();
+  const params = useParams();
+  const { id } = params;
+  const [recipe, setRecipe] = useState();
+  const [local, setLocal] = useState({ cocktails: {}, meals: {} });
 
-  const returnFood = () => {
-    navigate(`/foods/${id}`);
-  };
+  useEffect(() => {
+    const getRecipe = async () => {
+      const fetchRecipe = await getMealRecipeById(id);
+      const ingredientes = Object
+        .keys(fetchRecipe).filter((key) => key.includes('strIngredient'));
+      setRecipe({
+        image: fetchRecipe.strMealThumb,
+        name: fetchRecipe.strMeal,
+        category: fetchRecipe.strCategory,
+        ingredients: ingredientes
+          .map((ingrediente) => (fetchRecipe[ingrediente] !== null
+                && fetchRecipe[ingrediente])),
+        preparation: fetchRecipe.strInstructions,
+      });
+    };
 
-  const doneRecipes = () => {
-    localStorage.setItem('doneRecipes', JSON.stringify([{
-      id,
-    }]));
-    navigate(`/foods/${id}`);
-  };
+    const getLocal = () => {
+      const saveLocal = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      const valida = saveLocal ? saveLocal.meals[id] : [];
+      setLocal(valida);
+    };
+
+    getLocal();
+    getRecipe();
+  }, []);
 
   return (
-    <div>
-      <p>FoodRecipeInProgress</p>
-      <button type="button" onClick={ returnFood }>Voltar</button>
-      <button type="button" onClick={ doneRecipes }>Finalizar receita</button>
-    </div>
+    <RecipeInProgress id={ params.id } page="foods" recipe={ recipe } local={ local } />
   );
 };
 
