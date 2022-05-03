@@ -1,52 +1,51 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router';
 import PropTypes from 'prop-types';
 import shareIcon from '../images/shareIcon.svg';
 import favoritIcon from '../images/blackHeartIcon.svg';
-import { getMealRecipeById } from '../services/theMealsDbAPI';
-import { getDrinkRecipeById } from '../services/theCockTailDbAPI';
 
-const RecipeInProgress = ({ id, page }) => {
-  const [recipe, setRecipe] = useState();
-
-  const getFood = async () => {
-    const fetchRecipe = await getMealRecipeById(id);
-    const ingredientes = Object
-      .keys(fetchRecipe).filter((key) => key.includes('strIngredient'));
-    setRecipe({
-      image: fetchRecipe.strMealThumb,
-      name: fetchRecipe.strMeal,
-      category: fetchRecipe.strCategory,
-      ingredients: ingredientes
-        .map((ingrediente) => (fetchRecipe[ingrediente])),
-      preparation: fetchRecipe.strInstructions,
-    });
-  };
-
-  const getDrink = async () => {
-    const fetchRecipe = await getDrinkRecipeById(id);
-    const ingredientes = Object
-      .keys(fetchRecipe).filter((key) => key.includes('strIngredient'));
-    setRecipe({
-      image: fetchRecipe.strDrinkThumb,
-      name: fetchRecipe.strDrink,
-      category: fetchRecipe.strCategory,
-      ingredients: ingredientes
-        .map((ingrediente) => (fetchRecipe[ingrediente])),
-      preparation: fetchRecipe.strInstructions,
-    });
-  };
+const RecipeInProgress = ({ id, recipe, page, local }) => {
+  const [done, setDone] = useState([]);
+  const [saveLocal, setSaveLocal] = useState({ cocktails: {}, meals: {} });
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const getRecipe = async () => {
-      if (page === 'foods') {
-        getFood();
-      }
-      if (page === 'drinks') {
-        getDrink();
+    const getDone = () => {
+      setDone(local);
+    };
+
+    getDone();
+  }, [local]);
+
+  useEffect(() => {
+    const handleLocal = () => {
+      switch (page) {
+      case 'foods':
+        setSaveLocal({ ...saveLocal, meals: { ...saveLocal.meals, [id]: done } });
+        break;
+      case 'drinks':
+        setSaveLocal({ ...saveLocal, cocktails: { ...saveLocal.cocktails, [id]: done } });
+        break;
+      default:
+        break;
       }
     };
-    getRecipe();
-  }, []);
+
+    if (done.length > 0) { handleLocal(); }
+  }, [done]);
+
+  useEffect(() => {
+    const setSave = () => {
+      localStorage.setItem('inProgressRecipes', JSON.stringify(saveLocal));
+    };
+    if (done.length > 0) { setSave(); }
+  }, [saveLocal]);
+
+  const handleDone = ({ target }) => {
+    const { checked, value } = target;
+    return checked ? setDone([...done, value])
+      : setDone(done.filter((ingredient) => ingredient !== value));
+  };
 
   return (
     <div>
@@ -91,6 +90,8 @@ const RecipeInProgress = ({ id, page }) => {
                 <label htmlFor={ ingredient }>
                   <input
                     id={ ingredient }
+                    onChange={ handleDone }
+                    checked={ done.some((value) => value === ingredient) }
                     type="checkbox"
                     value={ ingredient }
                   />
@@ -105,6 +106,9 @@ const RecipeInProgress = ({ id, page }) => {
           <button
             type="button"
             data-testid="finish-recipe-btn"
+            disabled={ done.length !== recipe.ingredients
+              .filter((value) => value !== undefined && value).length }
+            onClick={ () => navigate('/done-recipes') }
           >
             finalizar
           </button>
