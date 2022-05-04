@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes, { string } from 'prop-types';
 import { Link } from 'react-router-dom';
+import '../css/exploreByNationality.css';
 
 function NationalityCard({ recipe, index, type }) {
   const name = recipe[`str${type}`];

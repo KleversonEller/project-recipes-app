@@ -1,22 +1,10 @@
-.recipes-container {
+.exploreByNationalityContainer {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
   margin: 5px 0 55px;
   width: 100vw;
-}
-
-.explore-by-nationality-dropdown {
-  height: 10px;
-  width: 200px;
-}
-
-.card-container {
-  height: 520px;
-  left: 0;
-  margin-bottom: 20px;
-  position: relative;
-  width: 360px;
+  padding-top: 100px;
 }
 
 .card-container a {

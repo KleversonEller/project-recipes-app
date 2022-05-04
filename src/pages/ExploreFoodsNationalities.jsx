@@ -3,7 +3,6 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { getAllMealNationalities, getAllMeals } from '../services/theMealsDbAPI';
 import NationalityCard from '../components/NationalityCard';
-import '../css/exploreByNationality.css';
 
 function ExFoodsNationalities() {
   const [nationalities, setNationalities] = useState([]);
