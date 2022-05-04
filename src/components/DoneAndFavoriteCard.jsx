@@ -41,8 +41,9 @@ function DoneAndFavoriteCard({ index, setRecipesFromStorage,
     <div className="favoriteCards">
       <Link
         to={ `/${type === 'drink' ? 'drinks' : 'foods'}/${id}` }
+        className="favoriteCardsImg"
       >
-        <div className="favoriteCardsImg">
+        <div>
           <img
             width={ 60 }
             className="done-fav-card-image"
@@ -51,14 +52,6 @@ function DoneAndFavoriteCard({ index, setRecipesFromStorage,
             data-testid={ `${index}-horizontal-image` }
           />
         </div>
-        {!isFavoriteRecipes && (
-          <h3
-            className="done-fav-card-h3"
-            data-testid={ `${index}-horizontal-done-date` }
-          >
-            {doneDate}
-          </h3>
-        )}
       </Link>
       <div className="favoriteDetails">
         <Link
@@ -73,6 +66,14 @@ function DoneAndFavoriteCard({ index, setRecipesFromStorage,
             ? `${nationality} - ${category}`
             : `${alcoholicOrNot}`}
         </h3>
+        {!isFavoriteRecipes && (
+          <h3
+            className="done-fav-card-h3"
+            data-testid={ `${index}-horizontal-done-date` }
+          >
+            {doneDate}
+          </h3>
+        )}
         {(!isFavoriteRecipes && type === 'food') && (
           tags.map((tagName) => (
             <h4

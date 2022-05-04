@@ -8,6 +8,13 @@
   bottom: 0;
   color: white;
   font-weight: 900;
+  left: 12px;
+  margin-top: 10px;
   position: fixed;
   width: 339px;
 }
+
+.btn-start:disabled {
+  background-color: silver;
+}
+

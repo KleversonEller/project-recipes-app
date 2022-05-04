@@ -32,30 +32,32 @@ function DoneRecipes() {
   return (
     <div className="doneRecipesContainer">
       <Header title="Done Recipes" search={ false } />
-      <button
-        type="button"
-        data-testid="filter-by-all-btn"
-        value="all"
-        onClick={ handleClick }
-      >
-        All categories
-      </button>
-      <button
-        type="button"
-        data-testid="filter-by-food-btn"
-        value="food"
-        onClick={ handleClick }
-      >
-        Food
-      </button>
-      <button
-        type="button"
-        data-testid="filter-by-drink-btn"
-        value="drink"
-        onClick={ handleClick }
-      >
-        Drinks
-      </button>
+      <div className="favoriteFilters">
+        <button
+          type="button"
+          data-testid="filter-by-all-btn"
+          value="all"
+          onClick={ handleClick }
+        >
+          All categories
+        </button>
+        <button
+          type="button"
+          data-testid="filter-by-food-btn"
+          value="food"
+          onClick={ handleClick }
+        >
+          Food
+        </button>
+        <button
+          type="button"
+          data-testid="filter-by-drink-btn"
+          value="drink"
+          onClick={ handleClick }
+        >
+          Drinks
+        </button>
+      </div>
       <div className="done-fav-cards-container">
         { filteredRecipes
           .map((recipe, index) => (

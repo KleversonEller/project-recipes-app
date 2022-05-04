@@ -44,9 +44,13 @@ const ButtonRecipe = ({ type }) => {
 
   const verifyDoneRecipes = () => {
     const localDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
-    if (localDoneRecipes && localDoneRecipes[0].id === id) {
-      console.log('receita finalizada');
-      setStateButton(false);
+    console.log('local', localDoneRecipes);
+    if (localDoneRecipes) {
+      const recipeId = localDoneRecipes.find((doneId) => doneId.id === id);
+      if (recipeId) {
+        console.log('receita finalizada');
+        setStateButton(false);
+      }
     }
   };
 
