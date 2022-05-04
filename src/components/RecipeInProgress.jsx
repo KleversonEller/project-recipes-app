@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import PropTypes from 'prop-types';
 import Favorite from './Favorite';
+import DoneRecipe from './DoneRecipe';
 
 const RecipeInProgress = ({ id, recipe, page, local, data }) => {
   const [done, setDone] = useState([]);
@@ -92,6 +93,12 @@ const RecipeInProgress = ({ id, recipe, page, local, data }) => {
             <span data-testid="instructions">
               {recipe.preparation}
             </span>
+            <DoneRecipe
+              disabled={ done.length !== recipe.ingredients
+                .filter((value) => value !== undefined && value).length }
+              food={ data }
+              type={ page }
+            />
           </div>
           <button
             className="btn-start"
