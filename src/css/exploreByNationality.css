@@ -3,8 +3,8 @@
   flex-wrap: wrap;
   justify-content: space-evenly;
   margin: 5px 0 55px;
-  width: 100vw;
   padding-top: 100px;
+  width: 100vw;
 }
 
 .card-container a {
