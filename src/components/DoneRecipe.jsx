@@ -5,22 +5,20 @@ import PropTypes from 'prop-types';
 const DoneRecipe = (props) => {
   const navigate = useNavigate();
   const { disabled, food, type } = props;
-  const day = new Date();
-  console.log(disabled, food, type);
+  const timeElapsed = Date.now();
+  const today = new Date(timeElapsed);
+  const day = today.toDateString();
 
   const saveLocal = (done) => {
     const local = JSON.parse(localStorage.getItem(('doneRecipes')));
     // console.log(local);
     if (!local || local.lenght === 0 || local === null) {
       localStorage.setItem('doneRecipes', JSON.stringify([done]));
-      console.log('ei');
     } else if (local || local.lenght > 0) {
       localStorage.setItem('doneRecipes', JSON.stringify([...local, done]));
-      console.log('djo');
     } else {
       const except = local.filter((item) => (item.id !== id));
       localStorage.setItem('doneRecipes', JSON.stringify([...except]));
-      console.log('será');
     }
   };
 
@@ -32,10 +30,9 @@ const DoneRecipe = (props) => {
         type: 'food',
         nationality: food.strArea,
         category: food.strCategory,
-        alcoholicOrNot: '',
         name: food.strMeal,
         image: food.strMealThumb,
-        tags: food.strTags,
+        tags: [food.strTags],
         doneDate: day,
       };
       saveLocal(done);
