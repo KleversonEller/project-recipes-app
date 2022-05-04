@@ -54,31 +54,16 @@ const DoneRecipe = (props) => {
     }
   };
 
-  /*
-  const verifyDone = () => {
-    const local = JSON.parse(localStorage.getItem('doneRecipes'));
-    let sameId;
-    if (local) {
-      sameId = local.find((item) => (item.id === id));
-    }
-    if (sameId) {
-      console.log('esconde botão');
-    }
-  };
-
-  useEffect(() => {
-    verifyDone();
-  }, []);
-  */
-
   return (
-    <div className="botaoteste">
+    <div className="btn-start">
       <button
+        className="btn-start"
         type="button"
         disabled={ disabled }
         onClick={ addFavorite }
+        data-testid="finish-recipe-btn"
       >
-        teste
+        Finalizar
       </button>
     </div>
   );

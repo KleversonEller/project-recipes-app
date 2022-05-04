@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router';
 import PropTypes from 'prop-types';
 import Favorite from './Favorite';
 import DoneRecipe from './DoneRecipe';
@@ -8,7 +7,6 @@ import DoneRecipe from './DoneRecipe';
 const RecipeInProgress = ({ id, recipe, page, local, data }) => {
   const [done, setDone] = useState([]);
   const [saveLocal, setSaveLocal] = useState({ cocktails: {}, meals: {} });
-  const navigate = useNavigate();
 
   useEffect(() => {
     const getDone = () => {
@@ -93,23 +91,14 @@ const RecipeInProgress = ({ id, recipe, page, local, data }) => {
             <span data-testid="instructions">
               {recipe.preparation}
             </span>
-            <DoneRecipe
-              disabled={ done.length !== recipe.ingredients
-                .filter((value) => value !== undefined && value).length }
-              food={ data }
-              type={ page }
-            />
           </div>
-          <button
-            className="btn-start"
-            type="button"
-            data-testid="finish-recipe-btn"
+          <DoneRecipe
             disabled={ done.length !== recipe.ingredients
               .filter((value) => value !== undefined && value).length }
-            onClick={ () => navigate('/done-recipes') }
-          >
-            Finalizar
-          </button>
+            food={ data }
+            type={ page }
+            className="buttomRecipeContainer"
+          />
         </div>
       )
         : <p> loading ...</p>}
