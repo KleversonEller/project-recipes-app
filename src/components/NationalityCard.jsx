@@ -9,7 +9,7 @@ function NationalityCard({ recipe, index, type }) {
   const id = recipe[`id${type}`];
 
   return (
-    <div className="card-container" data-testid={ `${index}-recipe-card` }>
+    <div className="cardNationalityCard" data-testid={ `${index}-recipe-card` }>
       <Link to={ `/${type === 'Drink' ? 'drinks' : 'foods'}/${id}` }>
         <img
           className="card-image"
@@ -17,7 +17,7 @@ function NationalityCard({ recipe, index, type }) {
           alt={ name }
           data-testid={ `${index}-card-img` }
         />
-        <h1 className="card-h1" data-testid={ `${index}-card-name` }>{name}</h1>
+        <h3 className="card-h1" data-testid={ `${index}-card-name` }>{name}</h3>
       </Link>
     </div>
   );

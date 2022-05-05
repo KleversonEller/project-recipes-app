@@ -52,26 +52,28 @@ function ExFoodsNationalities() {
 
   return (
     <div className="exploreByNationalityContainer">
-      <Header headerTitle="Explore Nationalities" />
-      <select
-        data-testid="explore-by-nationality-dropdown"
-        onChange={ handleChange }
-      >
-        <option value="All" data-testid="All-option">All</option>
-        {
-          nationalities.length > 1 && nationalities
-            .map(({ strArea }) => (
-              <option
-                data-testid={ `${strArea}-option` }
-                key={ strArea }
-                value={ strArea }
-              >
-                { strArea }
-              </option>
-            ))
-        }
-      </select>
-      <div className="recipes-container">
+      <Header title="Explore Nationalities" search />
+      <div className="exploreByNationalitySelect">
+        <select
+          data-testid="explore-by-nationality-dropdown"
+          onChange={ handleChange }
+        >
+          <option value="All" data-testid="All-option">All</option>
+          {
+            nationalities.length > 1 && nationalities
+              .map(({ strArea }) => (
+                <option
+                  data-testid={ `${strArea}-option` }
+                  key={ strArea }
+                  value={ strArea }
+                >
+                  { strArea }
+                </option>
+              ))
+          }
+        </select>
+      </div>
+      <div className="cardNationalityContainer">
         {
           foodsCard && foodsCard
             .filter((_, index) => index < MAXIMUM_RENDER)

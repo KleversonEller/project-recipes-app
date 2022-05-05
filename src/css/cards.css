@@ -1,8 +1,5 @@
 .card-container {
-  height: 520px;
-  left: 0;
   margin-bottom: 20px;
-  position: relative;
   width: 360px;
 }
 
@@ -11,7 +8,6 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  left: 25px;
   margin: auto;
   margin-top: 10px;
   padding-bottom: 5px;
@@ -34,9 +30,10 @@
 .card-container-cards {
   display: flex;
   flex-wrap: wrap;
-  height: 360px;
+  height: 340px;
   justify-content: space-around;
   left: 0;
+  margin-bottom: 60px;
   margin-top: 10px;
   overflow: scroll;
   padding: 5px;
